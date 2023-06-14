@@ -13,6 +13,11 @@ app.get('/', (req, res) => {
     res.send('Welcome to my app!')
 })
 
+// Routes set
+const authRoute = require('./routes/auth')
+
+app.use('/api/user', authRoute)
+
 mongoose.connect(process.env.DB_CONNECTOR, () => {
     console.log('Successfully connected to the database...')
     }
