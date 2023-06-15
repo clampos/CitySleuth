@@ -1,28 +1,39 @@
-const express = require('express')
-const app = express()
+const express = require("express");
+// express app
+const app = express();
 
-const mongoose = require('mongoose')
+// const https = require('https')
 
-const bodyParser = require('body-parser')
+// const fs = require('fs')
 
-require('dotenv/config')
+const mongoose = require("mongoose");
 
-app.use(bodyParser.json())
+const bodyParser = require("body-parser");
 
-app.get('/', (req, res) => {
-    res.send('Welcome to my app!')
-})
+require("dotenv/config");
+
+app.use(bodyParser.json());
+
+app.use((req, res, next) => {
+  console.log(req.path, req.method);
+  next();
+});
+
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome to my app!" });
+});
 
 // Routes set
-const authRoute = require('./routes/auth')
+const authRoute = require("./routes/auth");
 
-app.use('/api/user', authRoute)
+// Middleware
+app.use("/api/user", authRoute);
 
 mongoose.connect(process.env.DB_CONNECTOR, () => {
-    console.log('Successfully connected to the database...')
-    }
-)
+  console.log("Successfully connected to the database...");
+});
 
-app.listen(3000, ()=> {
-    console.log('Server up and running...')
-})
+// Listen for requests
+app.listen(process.env.PORT, () => {
+  console.log("Listening on port 3000...");
+});
