@@ -11,6 +11,7 @@ const bcryptjs = require("bcryptjs");
 const jsonwebtoken = require("jsonwebtoken");
 
 // TODO: All following code to be reviewed - currently based on MiniWall for purposes of setting up initial authentications
+// POST: register an existing user - WORKS
 router.post("/register", async (req, res) => {
   console.log(req.body);
 
@@ -82,6 +83,10 @@ router.post("/login", async (req, res) => {
   // Generate an auth-token
   const token = jsonwebtoken.sign({ _id: user._id }, process.env.TOKEN_SECRET);
   res.header("auth-token", token).send({ "auth-token": token });
+});
+
+router.get("/logout", async (req, res) => {
+  req.logout;
 });
 
 module.exports = router;

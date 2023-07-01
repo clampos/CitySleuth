@@ -14,13 +14,15 @@ require("dotenv/config");
 
 app.use(bodyParser.json());
 
+app.set("view engine", "ejs");
+
 app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
 });
 
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to my app!" });
+  res.render("start");
 });
 
 // Routes set
@@ -35,5 +37,5 @@ mongoose.connect(process.env.DB_CONNECTOR, () => {
 
 // Listen for requests
 app.listen(process.env.PORT, () => {
-  console.log("Listening on port 3000...");
+  console.log("Listening on port", process.env.PORT);
 });
