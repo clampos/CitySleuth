@@ -13,3 +13,6 @@ npm install express nodemon
 - JWT for generating auth-tokens
 
 npm install mongoose dotenv body-parser joi bcryptjs jsonwebtoken
+
+- Start up server using nodemon (i.e. refreshes after changes made)
+  npm run dev

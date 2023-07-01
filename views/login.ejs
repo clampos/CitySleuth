@@ -37,22 +37,22 @@
         text-align: center;
       }
 
-      .wrapper .form {
+      .wrapper form {
         width: 100%;
       }
 
-      .wrapper .form .input_field {
+      .wrapper form .input_field {
         margin-bottom: 15px;
         display: flex;
       }
 
-      .wrapper .form .input_field label {
+      .wrapper form .input_field label {
         width: 200px;
         margin-right: 10px;
         font-size: 14px;
       }
 
-      .wrapper .form .input_field .input {
+      .wrapper form .input_field .input {
         width: 100%;
         outline: none;
         border: 1px solid #d5dbd9;
@@ -61,13 +61,13 @@
         transition: all 0.3s ease;
       }
 
-      .wrapper .form .input_field .custom_select {
+      .wrapper form .input_field .custom_select {
         position: relative;
         width: 100%;
         height: 37px;
       }
 
-      .wrapper .form .input_field .custom_select select {
+      .wrapper form .input_field .custom_select select {
         appearance: none;
         border: 1px solid #d5dbd9;
         width: 100%;
@@ -76,7 +76,7 @@
         border-radius: 3px;
       }
 
-      .wrapper .form .input_field .custom_select:before {
+      .wrapper form .input_field .custom_select:before {
         content: "";
         position: absolute;
         top: 12px;
@@ -86,11 +86,11 @@
         pointer-events: none;
       }
 
-      .wrapper .form .input_field .input:focus {
+      .wrapper form .input_field .input:focus {
         border: 1px solid #0d30a3;
       }
 
-      .wrapper .form .input_field .bttn {
+      .wrapper form .input_field .bttn {
         width: 100%;
         padding: 8px 10px;
         font-size: 15px;
@@ -102,11 +102,11 @@
         outline: none;
       }
 
-      .wrapper .form .input_field:last-child {
+      .wrapper form .input_field:last-child {
         margin-bottom: 0;
       }
 
-      .wrapper .form .input_field .bttn:hover {
+      .wrapper form .input_field .bttn:hover {
         background: rgb(8, 94, 122);
       }
     </style>
@@ -114,7 +114,7 @@
   <body>
     <div class="wrapper">
       <div class="title">Login to your WhereAmI? account</div>
-      <div class="form">
+      <form action="/login" method="POST">
         <div class="input_field">
           <label>Username</label>
           <input type="text" name="username" class="input" />

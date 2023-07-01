@@ -2,6 +2,8 @@ const joi = require("joi");
 
 const registerAuthentication = (data) => {
   const schemaAuthentication = joi.object({
+    first_name: joi.string().required().min(2).max(256),
+    surname: joi.string().required().min(2).max(256),
     username: joi.string().required().min(6).max(256),
     // TODO validate email
     email: joi.string().required().min(7).max(256),
@@ -12,6 +14,7 @@ const registerAuthentication = (data) => {
 
 const loginAuthentication = (data) => {
   const schemaAuthentication = joi.object({
+    username: joi.string().required().min(6).max(256),
     email: joi.string().required().min(7).max(256).email(),
     password: joi.string().required().min(6).max(1024),
   });

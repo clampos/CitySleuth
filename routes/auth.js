@@ -43,15 +43,18 @@ router.post("/register", async (req, res) => {
 
   // Inserting data
   const user = new User({
+    first_name: req.body.first_name,
+    surname: req.body.surname,
     username: req.body.username,
     email: req.body.email,
     password: hashedPassword,
   });
   try {
     const savedUser = await user.save();
-    res.send(savedUser);
+    res.redirect("/login");
   } catch (err) {
     res.status(400).send({ message: err });
+    res.redirect("/register");
   }
 });
 

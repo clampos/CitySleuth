@@ -33,7 +33,7 @@ app.get("/login", (req, res) => {
 const authRoute = require("./routes/auth");
 
 // Middleware
-app.use("/api/user", authRoute);
+app.use("/", authRoute);
 
 mongoose.connect(process.env.DB_CONNECTOR, () => {
   console.log("Successfully connected to the database...");
