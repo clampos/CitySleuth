@@ -10,6 +10,8 @@ app.use(bodyParser.json());
 
 app.set("view engine", "ejs");
 
+app.use(express.urlencoded({ extended: false }));
+
 app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
