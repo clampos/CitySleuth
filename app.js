@@ -1,13 +1,7 @@
+// Libraries installed using npm
 const express = require("express");
-// express app
 const app = express();
-
-// const https = require('https')
-
-// const fs = require('fs')
-
 const mongoose = require("mongoose");
-
 const bodyParser = require("body-parser");
 
 require("dotenv/config");
@@ -22,7 +16,15 @@ app.use((req, res, next) => {
 });
 
 app.get("/", (req, res) => {
-  res.render("start");
+  res.render("home");
+});
+
+app.get("/register", (req, res) => {
+  res.render("register");
+});
+
+app.get("/login", (req, res) => {
+  res.render("login");
 });
 
 // Routes set

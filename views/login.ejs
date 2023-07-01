@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <h1>Welcome to WhereAmI? - a fast, free travel recommendation app</h1>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WhereAmI? - Login</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+          sans-serif;
+      }
+
+      body {
+        background: lightcoral;
+        padding: 0 10px;
+      }
+
+      .wrapper {
+        max-width: 500px;
+        width: 100%;
+        margin: 20px auto;
+        padding: 30px;
+        box-shadow: 1px 1px 2px;
+        background-color: white;
+      }
+
+      .wrapper .title {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 25px;
+        color: black;
+        text-align: center;
+      }
+
+      .wrapper .form {
+        width: 100%;
+      }
+
+      .wrapper .form .input_field {
+        margin-bottom: 15px;
+        display: flex;
+      }
+
+      .wrapper .form .input_field label {
+        width: 200px;
+        margin-right: 10px;
+        font-size: 14px;
+      }
+
+      .wrapper .form .input_field .input {
+        width: 100%;
+        outline: none;
+        border: 1px solid #d5dbd9;
+        padding: 8px 10px;
+        border-radius: 3px;
+        transition: all 0.3s ease;
+      }
+
+      .wrapper .form .input_field .custom_select {
+        position: relative;
+        width: 100%;
+        height: 37px;
+      }
+
+      .wrapper .form .input_field .custom_select select {
+        appearance: none;
+        border: 1px solid #d5dbd9;
+        width: 100%;
+        height: 100%;
+        padding: 8px;
+        border-radius: 3px;
+      }
+
+      .wrapper .form .input_field .custom_select:before {
+        content: "";
+        position: absolute;
+        top: 12px;
+        right: 10px;
+        border: 8px solid;
+        border-color: black transparent transparent transparent;
+        pointer-events: none;
+      }
+
+      .wrapper .form .input_field .input:focus {
+        border: 1px solid #0d30a3;
+      }
+
+      .wrapper .form .input_field .bttn {
+        width: 100%;
+        padding: 8px 10px;
+        font-size: 15px;
+        border: 0;
+        background: rgb(15, 147, 190);
+        color: black;
+        cursor: pointer;
+        border-radius: 3px;
+        outline: none;
+      }
+
+      .wrapper .form .input_field:last-child {
+        margin-bottom: 0;
+      }
+
+      .wrapper .form .input_field .bttn:hover {
+        background: rgb(8, 94, 122);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="title">Login to your WhereAmI? account</div>
+      <div class="form">
+        <div class="input_field">
+          <label>Username</label>
+          <input type="text" class="input" />
+        </div>
+        <div class="input_field">
+          <label>Email Address</label>
+          <input type="email" class="input" />
+        </div>
+        <div class="input_field">
+          <label>Password</label>
+          <input type="text" class="input" />
+        </div>
+        <div class="input_field">
+          <input type="submit" value="Login" class="bttn" />
+        </div>
+        <div>
+          <p>Don't have an account with us? <a href="/register">Register</a></p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
