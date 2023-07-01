@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <h1>Welcome to WhereAmI? - a fast, free travel recommendation app</h1>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -20,7 +19,14 @@
         padding: 0 10px;
       }
 
+      .welcome {
+        float: left;
+        width: 50%;
+        padding: 20px;
+      }
+
       .wrapper {
+        float: left;
         max-width: 500px;
         width: 100%;
         margin: 20px auto;
@@ -112,8 +118,13 @@
     </style>
   </head>
   <body>
+    <div class="parent">
+        <div class="welcome">
+    <h1>Welcome to WhereAmI? - a fast, free travel recommendation app</h1>
+    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consequuntur, eveniet. Temporibus eos a enim! Nam veritatis, minus ratione deserunt beatae laudantium? Accusamus mollitia voluptatum iusto odio nihil dolorum, aut fugit architecto pariatur quo unde quidem sapiente porro ab ipsam nemo quas nesciunt. Ullam assumenda laborum voluptas odio, commodi saepe error.</p>
+</div>
     <div class="wrapper">
-      <div class="title">Login to your WhereAmI? account</div>
+      <div class="title">Login to WhereAmI?</div>
       <form action="/login" method="POST">
         <div class="input_field">
           <label>Username</label>
@@ -135,5 +146,6 @@
         </div>
       </div>
     </div>
+</div>
   </body>
 </html>

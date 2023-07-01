@@ -16,3 +16,5 @@ npm install mongoose dotenv body-parser joi bcryptjs jsonwebtoken
 
 - Start up server using nodemon (i.e. refreshes after changes made)
   npm run dev
+
+npm install passport passport-local express-session

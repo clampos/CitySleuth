@@ -85,7 +85,12 @@ router.post("/login", async (req, res) => {
 
   // Generate an auth-token
   const token = jsonwebtoken.sign({ _id: user._id }, process.env.TOKEN_SECRET);
-  res.header("auth-token", token).send({ "auth-token": token });
+  try {
+    res.header("auth-token", token).send({ "auth-token": token });
+    res.redirect("/home");
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 router.get("/logout", async (req, res) => {
