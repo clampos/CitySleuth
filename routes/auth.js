@@ -1,5 +1,26 @@
 const express = require("express");
 const router = express.Router();
+// body-parser deprecated as express has its own body parser
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const sessions = require("express-session");
+
+var session;
+
+// Initial code produced with help from https://www.section.io/engineering-education/session-management-in-nodejs-using-expressjs-and-express-session/
+const oneDay = 1000 * 60 * 60 * 24;
+router.use(
+  sessions({
+    secret: process.env.TOKEN_SECRET,
+    saveUninitialized: true,
+    cookie: { maxAge: oneDay },
+    resave: false,
+  })
+);
+
+router.use(express.json());
+router.use(express.urlencoded({ extended: true }));
+router.use(cookieParser);
 
 const User = require("../models/User");
 const {
@@ -53,7 +74,6 @@ router.post("/register", async (req, res) => {
     const savedUser = await user.save();
     res.redirect("/login");
   } catch (err) {
-    res.status(400).send({ message: err });
     res.redirect("/register");
   }
 });
@@ -83,9 +103,18 @@ router.post("/login", async (req, res) => {
     return res.status(400).send({ message: "Password is wrong! :(" });
   }
 
-  // Generate an auth-token
-  const token = jsonwebtoken.sign({ _id: user._id }, process.env.TOKEN_SECRET);
+  // Initiate login session
   try {
+    session = req.session;
+    session.userid = req.body.username;
+    console.log(req.session);
+    res.send("Hey there, welcome");
+    // Generate an auth-token
+    const token = jsonwebtoken.sign(
+      { _id: user._id },
+      process.env.TOKEN_SECRET
+    );
+
     res.header("auth-token", token).send({ "auth-token": token });
     res.redirect("/home");
   } catch (err) {
@@ -94,7 +123,8 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/logout", async (req, res) => {
-  req.logout;
+  req.session.destroy;
+  res.redirect("/register");
 });
 
 module.exports = router;

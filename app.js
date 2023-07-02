@@ -2,15 +2,9 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
-
 require("dotenv/config");
 
-app.use(bodyParser.json());
-
 app.set("view engine", "ejs");
-
-app.use(express.urlencoded({ extended: false }));
 
 app.use((req, res, next) => {
   console.log(req.path, req.method);
