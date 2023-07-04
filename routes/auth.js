@@ -1,38 +1,42 @@
 const express = require("express");
 const router = express.Router();
-// body-parser deprecated as express has its own body parser
-const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
+const passport = require("passport");
+const genPassword = require("../utils/passwordUtil").genPassword;
+const connection = require("../config/database");
+const User = connection.model.User;
 const sessions = require("express-session");
 
-var session;
-
-// Initial code produced with help from https://www.section.io/engineering-education/session-management-in-nodejs-using-expressjs-and-express-session/
-const oneDay = 1000 * 60 * 60 * 24;
-router.use(
-  sessions({
-    secret: process.env.TOKEN_SECRET,
-    saveUninitialized: true,
-    cookie: { maxAge: oneDay },
-    resave: false,
-  })
-);
-
-router.use(express.json());
-router.use(express.urlencoded({ extended: true }));
-router.use(cookieParser);
-
-const User = require("../models/User");
 const {
   registerAuthentication,
   loginAuthentication,
 } = require("../authentications/authentication");
 
-const bcryptjs = require("bcryptjs");
-const jsonwebtoken = require("jsonwebtoken");
+// Routes set
+const authRoute = require("./routes/auth");
+const MongoStore = require("connect-mongo");
+const { connect } = require("http2");
+
+// GET routes
+
+router.set("view engine", "ejs");
+
+router.get("/", (req, res) => {
+  res.render("home");
+});
+
+router.get("/register", (req, res) => {
+  res.render("register");
+});
+
+router.get("/login", (req, res) => {
+  res.render("login");
+});
+
+// POST routes
 
 // TODO: All following code to be reviewed - currently based on MiniWall for purposes of setting up initial authentications
 // POST: register an existing user - WORKS
+
 router.post("/register", async (req, res) => {
   console.log(req.body);
 
@@ -64,8 +68,6 @@ router.post("/register", async (req, res) => {
 
   // Inserting data
   const user = new User({
-    first_name: req.body.first_name,
-    surname: req.body.surname,
     username: req.body.username,
     email: req.body.email,
     password: hashedPassword,
