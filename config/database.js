@@ -22,11 +22,11 @@ const userSchema = new mongoose.Schema({
     min: 7,
     max: 256,
   },
-  password: {
+  hash: {
     type: String,
-    require: true,
-    min: 6,
-    max: 1024,
+  },
+  salt: {
+    type: String,
   },
   date: {
     type: Date,
