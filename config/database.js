@@ -28,6 +28,9 @@ const userSchema = new mongoose.Schema({
   salt: {
     type: String,
   },
+  admin: {
+    type: Boolean,
+  },
   date: {
     type: Date,
     default: Date.now,

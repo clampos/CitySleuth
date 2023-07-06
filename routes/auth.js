@@ -13,6 +13,10 @@ router.get("/", (req, res, next) => {
   res.send('<h1>Home</h1><p>Please <a href="/register">register</a></p>');
 });
 
+router.get("/home", (req, res, next) => {
+  res.render("homepage");
+});
+
 router.get("/register", (req, res, next) => {
   res.render("register");
 });
@@ -22,7 +26,9 @@ router.get("/login", (req, res, next) => {
 });
 
 router.get("/protected-route", isAuth, (req, res, next) => {
-  res.send("You made it to the route.");
+  res.send(
+    "<p>You made it to the protected route. Please <a href='/logout'>logout</a></p>"
+  );
 });
 
 router.get("/admin-route", isAdmin, (req, res, next) => {
@@ -30,15 +36,19 @@ router.get("/admin-route", isAdmin, (req, res, next) => {
 });
 
 router.get("/logout", (req, res, next) => {
-  req.logout();
-  res.redirect("/protected-route");
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/login");
+  });
 });
 
-router.get("/login-success", (req, res, next) => {
-  res.send(
-    '<p>You successfully logged in. --> <a href="/protected-route">Go to protected route</a></p>'
-  );
-});
+// router.get("/login-success", (req, res, next) => {
+//   res.send(
+//     '<p>You successfully logged in. --> <a href="/protected-route">Go to protected route</a></p>'
+//   );
+// });
 
 router.get("/login-failure", (req, res, next) => {
   res.send("You entered the wrong password.");
@@ -46,7 +56,7 @@ router.get("/login-failure", (req, res, next) => {
 
 // POST routes
 router.post("/register", async (req, res, next) => {
-  const saltHash = genPassword(req.body.pw);
+  const saltHash = genPassword(req.body.password);
 
   const salt = saltHash.salt;
   const hash = saltHash.hash;
@@ -54,6 +64,7 @@ router.post("/register", async (req, res, next) => {
   const user = new User({
     username: req.body.username,
     email: req.body.email,
+    password: req.body.password,
     hash: hash,
     salt: salt,
   });
@@ -68,7 +79,7 @@ router.post("/register", async (req, res, next) => {
 router.post(
   "/login",
   passport.authenticate("local", {
-    failureRedirect: "/register",
+    failureRedirect: "/login",
     successRedirect: "/home",
   })
 );

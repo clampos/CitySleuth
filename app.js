@@ -3,9 +3,10 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const session = require("express-session");
-var passport = require("passport");
-var crypto = require("crypto");
-var routes = require("./routes/auth");
+const passport = require("passport");
+const crypto = require("crypto");
+const routes = require("./routes/auth");
+require("./routes/authMiddle");
 const connection = require("./config/database");
 
 const MongoStore = require("connect-mongo")(session);
@@ -39,7 +40,7 @@ app.use(
 require("./config/passport");
 
 app.use(passport.initialize());
-app.use(passport.session);
+app.use(passport.session());
 
 app.use((req, res, next) => {
   console.log(req.session);

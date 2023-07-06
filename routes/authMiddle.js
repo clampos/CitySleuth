@@ -13,7 +13,7 @@ module.exports.isAdmin = (req, res, next) => {
     next();
   } else {
     res.status(401).json({
-      message: "You are not an admin and therefore cannot view this resource",
+      message: "You are not an admin",
     });
   }
 };
