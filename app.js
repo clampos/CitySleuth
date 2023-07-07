@@ -14,6 +14,7 @@ const MongoStore = require("connect-mongo")(session);
 require("dotenv/config");
 
 app.set("view engine", "ejs");
+app.use(express.static("public"));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

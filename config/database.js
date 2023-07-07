@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const joi = require("joi");
 
 require("dotenv/config");
 
@@ -11,13 +12,13 @@ const connection = mongoose.createConnection(conn, {
 
 const userSchema = new mongoose.Schema({
   username: {
-    type: String,
+    type: joi.string(),
     require: true,
     min: 6,
     max: 256,
   },
   email: {
-    type: String,
+    type: joi.string(),
     require: true,
     min: 7,
     max: 256,

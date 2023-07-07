@@ -4,7 +4,7 @@ const connection = require("./database");
 const User = connection.models.User;
 const validPassword = require("../utils/passwordUtil").validPassword;
 
-const verifyCb = (username, password, done) => {
+const verify = (username, password, done) => {
   User.findOne({ username: username })
     .then((user) => {
       if (!user) {
@@ -26,7 +26,7 @@ const verifyCb = (username, password, done) => {
 
 const strategy = new LocalStrategy(
   { usernameField: "username", passwordField: "password" },
-  verifyCb
+  verify
 );
 
 passport.use(strategy);
