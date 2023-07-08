@@ -1,17 +1,20 @@
+require("express");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcryptjs");
 const connection = require("./database");
+const { valid } = require("joi");
+const { request } = require("express");
 const User = connection.models.User;
 
 const verifyUser = (username, password, done) => {
-  User.findOne({ username: username }).then((user) => {
+  User.findOne({ username: username }).then(async (user) => {
     if (user == null) {
       return done(null, false, { message: "No user with this username" });
     }
 
     try {
-      if (bcrypt.compare(password, user.password)) {
+      if (await bcrypt.compare(password, user.password)) {
         return done(null, user);
       } else {
         return done(null, false, { message: "Incorrect password" });
