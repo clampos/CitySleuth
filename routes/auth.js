@@ -4,7 +4,6 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
-const genPassword = require("../utils/passwordUtil").genPassword;
 const connection = require("../config/database");
 const User = connection.models.User;
 const bodyParser = require("body-parser");
