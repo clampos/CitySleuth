@@ -1,5 +1,5 @@
 // ----------------------------------------------------
-// Installation of required libraries
+// Import of required libraries
 // ----------------------------------------------------
 const express = require("express");
 const router = express.Router();
@@ -14,10 +14,14 @@ const registerValidation =
   require("../validations/validation").registerValidation;
 const bcrypt = require("bcryptjs");
 const flash = require("express-flash");
-const initialisePassport = require("../config/passport");
-initialisePassport(passport, (email) =>
-  User.find((user) => user.email === email)
-);
+const methodOverride = require("method-override");
+
+// const initializePassport = require("../config/passport");
+// initializePassport(
+//   passport,
+//   (email) => User.find((user) => user.email === email),
+//   (id) => User.find((user) => user.id === id)
+// );
 
 // ----------------------------------------------------
 // GET routes
@@ -117,17 +121,7 @@ router.post(
 );
 
 // ----------------------------------------------------
-// isAuth function
+// isAuth function - TODO
 // ----------------------------------------------------
-
-module.exports.isAuth = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    next();
-  } else {
-    res
-      .status(401)
-      .json({ message: "You are not authorised to view this resource" });
-  }
-};
 
 module.exports = router;

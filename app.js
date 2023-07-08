@@ -1,24 +1,30 @@
-// Libraries installed using npm
+// ----------------------------------------------------
+// Import of required libraries
+// ----------------------------------------------------
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const session = require("express-session");
 const passport = require("passport");
-const crypto = require("crypto");
 const routes = require("./routes/auth");
 const connection = require("./config/database");
-
+const flash = require("express-flash");
+const methodOverride = require("method-override");
 const MongoStore = require("connect-mongo")(session);
-
 require("dotenv/config");
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 
+// ----------------------------------------------------
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(passport.initialize());
+
+// ----------------------------------------------------
 
 const sessionStore = new MongoStore({
   mongooseConnection: connection,
@@ -27,7 +33,7 @@ const sessionStore = new MongoStore({
 
 app.use(
   session({
-    secret: process.env.TOKEN_SECRET,
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     store: sessionStore,
@@ -37,11 +43,15 @@ app.use(
   })
 );
 
+// ----------------------------------------------------
+
 // Middlewares
 
 require("./config/passport");
 
 app.use(passport.initialize());
+app.use(flash());
+app.use(methodOverride("_method"));
 app.use(passport.session());
 
 app.use((req, res, next) => {
