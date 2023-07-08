@@ -15,13 +15,6 @@ const bcrypt = require("bcryptjs");
 const flash = require("express-flash");
 const methodOverride = require("method-override");
 
-// const initializePassport = require("../config/passport");
-// initializePassport(
-//   passport,
-//   (email) => User.find((user) => user.email === email),
-//   (id) => User.find((user) => user.id === id)
-// );
-
 // ----------------------------------------------------
 // GET routes
 // ----------------------------------------------------
@@ -119,8 +112,6 @@ router.post(
   })
 );
 
-// ----------------------------------------------------
-// isAuth function - TODO
 // ----------------------------------------------------
 
 module.exports = router;
