@@ -12,25 +12,22 @@ const connection = mongoose.createConnection(conn, {
 
 const userSchema = new mongoose.Schema({
   username: {
-    type: joi.string(),
+    type: String,
     require: true,
     min: 6,
-    max: 256,
+    max: 20,
   },
   email: {
-    type: joi.string(),
+    type: String,
     require: true,
     min: 7,
     max: 256,
   },
-  hash: {
+  password: {
     type: String,
-  },
-  salt: {
-    type: String,
-  },
-  admin: {
-    type: Boolean,
+    require: true,
+    min: 6,
+    max: 20,
   },
   date: {
     type: Date,

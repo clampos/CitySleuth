@@ -1,22 +1,17 @@
-const crypto = require("crypto");
+const bcryptjs = require("bcryptjs");
 
+// Modify
 function genPassword(password) {
-  var salt = crypto.randomBytes(32).toString("hex");
-  var genHash = crypto
-    .pbkdf2Sync(password, salt, 10000, 64, "sha512")
-    .toString("hex");
-
-  return {
-    salt: salt,
-    hash: genHash,
-  };
+  const salt = bcryptjs.genSalt(5);
+  const hashedPassword = bcryptjs.hash(password, salt);
+  return hashedPassword;
 }
 
-function validPassword(password, hash, salt) {
-  var hashVerify = crypto
-    .pbkdf2Sync(password, salt, 10000, 64, "sha512")
-    .toString("hex");
-  return hash === hashVerify;
+function validPassword(password) {
+  const passwordValidation = bcryptjs.compare(req.body.password, password);
+  if (!passwordValidation) {
+    return res;
+  }
 }
 
 module.exports.validPassword = validPassword;

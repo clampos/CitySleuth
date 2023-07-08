@@ -2,21 +2,11 @@ const joi = require("joi");
 
 const registerValidation = (data) => {
   const schemaValidation = joi.object({
-    username: joi.string().required().min(6).max(256),
-    // TODO validate email
+    username: joi.string().alphanum().required().min(6).max(20),
     email: joi.string().required().min(7).max(256),
-    password: joi.string().required().min(6).max(1024),
-  });
-  return schemaValidation.validate(data);
-};
-
-const loginValidation = (data) => {
-  const schemaValidation = joi.object({
-    username: joi.string().required().min(6).max(256),
-    password: joi.string().required().min(6).max(1024),
+    password: joi.string().alphanum().required().min(6).max(20),
   });
   return schemaValidation.validate(data);
 };
 
 module.exports.registerValidation = registerValidation;
-module.exports.loginValidation = loginValidation;

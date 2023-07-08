@@ -6,7 +6,6 @@ const session = require("express-session");
 const passport = require("passport");
 const crypto = require("crypto");
 const routes = require("./routes/auth");
-require("./routes/authMiddle");
 const connection = require("./config/database");
 
 const MongoStore = require("connect-mongo")(session);
@@ -18,6 +17,8 @@ app.use(express.static("public"));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(passport.initialize());
 
 const sessionStore = new MongoStore({
   mongooseConnection: connection,
