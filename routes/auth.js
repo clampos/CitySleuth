@@ -26,7 +26,7 @@ router.get("/", (req, res, next) => {
 // ----------------------------------------------------
 
 router.get("/home", (req, res, next) => {
-  res.render("homepage");
+  res.render("homepage", { username: req.user.username });
 });
 
 // ----------------------------------------------------
