@@ -10,8 +10,15 @@
   <body>
     <header>
       <h1>Welcome to Cerulean - a fast, free travel recommendation app</h1>
-      <nav></nav>
     </header>
+    <div class="dropdown-menu-right">
+      <button onclick="dropdownFunc()" class="dropbtn">Menu</button>
+      <div id="menu" class="dropdown_menu">
+        <a href="#">Update Profile</a>
+        <a href="#">Contact</a>
+        <a href="/logout">Logout</a>
+      </div>
+    </div>
     <div class="parent">
       <div class="welcome">
         <h3>Hello, <%=username%>!</h3>
@@ -23,5 +30,26 @@
         </div>
       </div>
     </div>
+    <script>
+      /* When the user clicks on the button, 
+      toggle between hiding and showing the dropdown content */
+      function dropdownFunc() {
+        document.getElementById("menu").classList.toggle("show");
+      }
+
+      // Close the dropdown if the user clicks outside of it
+      window.onclick = function (event) {
+        if (!event.target.matches(".dropbtn")) {
+          var dropdowns = document.getElementsByClassName("dropdown_menu");
+          var i;
+          for (i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains("show")) {
+              openDropdown.classList.remove("show");
+            }
+          }
+        }
+      };
+    </script>
   </body>
 </html>
