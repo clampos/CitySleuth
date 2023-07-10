@@ -134,6 +134,12 @@ footer {
   background: rgb(8, 94, 122);
 }
 
+#map_iframe {
+  position: relative;
+  left: 30px;
+  top: 2px;
+}
+
 .dropbtn {
   background-color: #3498db;
   color: white;
