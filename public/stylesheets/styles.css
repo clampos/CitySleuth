@@ -185,3 +185,16 @@ footer {
 .show {
   display: block;
 }
+
+.googlemap {
+  position: relative;
+  margin-top: 8%;
+  float: right;
+  height: 700px;
+  width: 700px;
+}
+
+.googlemap iframe {
+  height: 100%;
+  width: 100%;
+}

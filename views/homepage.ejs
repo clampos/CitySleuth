@@ -21,18 +21,16 @@
     </div>
     <div class="parent">
       <div class="welcome">
-        <h3>Hello, <%=username%>!</h3>
+        <h3>Hello, <%=username%>! Looks like you're in...</h3>
+        <button onclick="getLocation()">Enable location services</button>
+        <p id="location"></p>
         <p>
           You have successfully logged in. Please wait while we build the site.
         </p>
       </div>
     </div>
-    <div id="map_iframe">
+    <div class="googlemap">
       <iframe
-        width="800"
-        height="800"
-        frameborder="0"
-        style="border: 0"
         referrerpolicy="no-referrer-when-downgrade"
         src="https://www.google.com/maps/embed/v1/view?key=AIzaSyAwvO4w6URyS1Rs15buwNKrF8xCPB9vJRA&center=37.4218,-122.0840"
         allowfullscreen
@@ -42,6 +40,7 @@
     <script>
       /* When the user clicks on the button, 
       toggle between hiding and showing the dropdown content */
+      // To modify
       function dropdownFunc() {
         document.getElementById("menu").classList.toggle("show");
       }
@@ -49,16 +48,36 @@
       // Close the dropdown if the user clicks outside of it
       window.onclick = function (event) {
         if (!event.target.matches(".dropbtn")) {
-          var dropdowns = document.getElementsByClassName("dropdown_menu");
+          var dropdown_list = document.getElementsByClassName("dropdown_menu");
           var i;
-          for (i = 0; i < dropdowns.length; i++) {
-            var openDropdown = dropdowns[i];
+          for (i = 0; i < dropdowns_list; i++) {
+            var openDropdown = dropdown_list[i];
             if (openDropdown.classList.contains("show")) {
               openDropdown.classList.remove("show");
             }
           }
         }
       };
+    </script>
+    <script>
+      // To modify
+      var x = document.getElementById("location");
+
+      function getLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+          x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+      }
+
+      function showPosition(position) {
+        x.innerHTML =
+          "Latitude: " +
+          position.coords.latitude +
+          "<br>Longitude: " +
+          position.coords.longitude;
+      }
     </script>
   </body>
 </html>
