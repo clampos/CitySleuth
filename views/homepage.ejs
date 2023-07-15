@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cerulean - a fast, free travel recommendation app</title>
     <link rel="stylesheet" href="stylesheets/styles.css" />
+    <script src="mapScript.js"></script>
+    <script
+      async
+      defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwvO4w6URyS1Rs15buwNKrF8xCPB9vJRA&callback=initMap"
+    ></script>
   </head>
   <body>
     <header>
@@ -14,8 +20,9 @@
     <div class="dropdown-menu-right">
       <button onclick="dropdownFunc()" class="dropbtn">Menu</button>
       <div id="menu" class="dropdown_menu">
-        <a href="#">Update Profile</a>
+        <a href="#">Update profile</a>
         <a href="#">Contact</a>
+        <a href="#">Change location preferences</a>
         <a href="/logout">Logout</a>
       </div>
     </div>
@@ -29,18 +36,9 @@
         </p>
       </div>
     </div>
-    <div class="googlemap">
-      <iframe
-        referrerpolicy="no-referrer-when-downgrade"
-        src="https://www.google.com/maps/embed/v1/view?key=AIzaSyAwvO4w6URyS1Rs15buwNKrF8xCPB9vJRA&center=37.4218,-122.0840"
-        allowfullscreen
-      >
-      </iframe>
-    </div>
+    <div id="map"></div>
     <script>
-      /* When the user clicks on the button, 
-      toggle between hiding and showing the dropdown content */
-      // To modify
+      // Dropdown menu function - TODO modify
       function dropdownFunc() {
         document.getElementById("menu").classList.toggle("show");
       }
@@ -50,7 +48,7 @@
         if (!event.target.matches(".dropbtn")) {
           var dropdown_list = document.getElementsByClassName("dropdown_menu");
           var i;
-          for (i = 0; i < dropdowns_list; i++) {
+          for (i = 0; i < dropdown_list; i++) {
             var openDropdown = dropdown_list[i];
             if (openDropdown.classList.contains("show")) {
               openDropdown.classList.remove("show");
@@ -79,5 +77,6 @@
           position.coords.longitude;
       }
     </script>
+    <footer>Birkbeck Computer Science MSc Project</footer>
   </body>
 </html>
