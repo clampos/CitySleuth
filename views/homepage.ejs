@@ -14,18 +14,12 @@
     ></script>
   </head>
   <body>
-    <header>
-      <h1>Cerulean - a fast, free travel recommendation app</h1>
-    </header>
-    <div class="dropdown-menu-right">
-      <button onclick="dropdownFunc()" class="dropbtn">Menu</button>
-      <div id="menu" class="dropdown_menu">
-        <a href="#">Update profile</a>
-        <a href="#">Contact</a>
-        <a href="#">Change location preferences</a>
-        <a href="/logout">Logout</a>
-      </div>
-    </div>
+    <ul>
+      <li><h1>Cerulean</h1></li>
+      <li style="float: right"><a href="/logout">Logout</a></li>
+      <li style="float: right"><a href="#">Contact</a></li>
+      <li style="float: right"><a href="#">Update profile</a></li>
+    </ul>
     <div class="parent">
       <div class="welcome">
         <h3>Hello, <%=username%>! Looks like you're in...</h3>
