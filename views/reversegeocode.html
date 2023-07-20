@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Reverse Geocoding with Google Maps</h1>
+    <script>
+      const LAT = 50.1;
+      const LNG = -97.3;
+
+      let url =
+        "https://maps.googleapis.com/maps/api/geocode/json?latng=50.1,-97.3&key=AIzaSyAwvO4w6URyS1Rs15buwNKrF8xCPB9vJRA";
+
+      fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((err) => console.warn(err.message));
+    </script>
+  </body>
+</html>

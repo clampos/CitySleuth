@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cerulean - a fast, free travel recommendation app</title>
+    <title>WorldGuide - a fast, free travel recommendation app</title>
     <link rel="stylesheet" href="stylesheets/styles.css" />
     <script src="mapScript.js"></script>
     <script
@@ -15,15 +15,15 @@
   </head>
   <body>
     <ul>
-      <li><h1>Cerulean</h1></li>
+      <li><h1>WorldGuide</h1></li>
       <li style="float: right"><a href="/logout">Logout</a></li>
       <li style="float: right"><a href="#">Contact</a></li>
       <li style="float: right"><a href="#">Update profile</a></li>
     </ul>
     <div class="parent">
       <div class="welcome">
-        <h3>Hello, <%=username%>! Looks like you're in...</h3>
-        <button onclick="getLocation()">Enable location services</button>
+        <h3>Hello, <%=username%>! Looks like you're in</h3>
+        <button onclick="getPosition()">Enable location services</button>
         <p id="location"></p>
         <p>
           You have successfully logged in. Please wait while we build the site.
@@ -32,43 +32,35 @@
     </div>
     <div id="map"></div>
     <script>
-      // Dropdown menu function - TODO modify
-      function dropdownFunc() {
-        document.getElementById("menu").classList.toggle("show");
-      }
-
-      // Close the dropdown if the user clicks outside of it
-      window.onclick = function (event) {
-        if (!event.target.matches(".dropbtn")) {
-          var dropdown_list = document.getElementsByClassName("dropdown_menu");
-          var i;
-          for (i = 0; i < dropdown_list; i++) {
-            var openDropdown = dropdown_list[i];
-            if (openDropdown.classList.contains("show")) {
-              openDropdown.classList.remove("show");
-            }
-          }
-        }
-      };
-    </script>
-    <script>
       // To modify
       var x = document.getElementById("location");
-
-      function getLocation() {
+      function getPosition() {
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(showPosition);
         } else {
-          x.innerHTML = "Geolocation is not supported by this browser.";
+          x.innerHTML =
+            "Geolocation not supported. Please check your location settings or try a different browser.";
         }
       }
 
       function showPosition(position) {
-        x.innerHTML =
-          "Latitude: " +
-          position.coords.latitude +
-          "<br>Longitude: " +
-          position.coords.longitude;
+        const LAT = position.coords.latitude;
+        const LNG = position.coords.longitude;
+        let url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${LAT},${LNG}&key=AIzaSyAwvO4w6URyS1Rs15buwNKrF8xCPB9vJRA`;
+        fetch(url)
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            let parts = data.results[0].address_components;
+            parts.forEach((part) => {
+              if (part.types.includes("postal_town")) {
+                document.body.insertAdjacentHTML("beforeend", "<p>COUNT</p>");
+              }
+              if (part.types.includes("country")) {
+              }
+            });
+          })
+          .catch((err) => console.warn(err.message));
       }
     </script>
     <footer>Birkbeck Computer Science MSc Project</footer>
