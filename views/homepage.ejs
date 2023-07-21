@@ -22,7 +22,7 @@
     </ul>
     <div class="parent">
       <div class="welcome">
-        <h3>Hello, <%=username%>! Looks like you're in</h3>
+        <h3>Hello, <%=username%>! Looks like you're in...</h3>
         <button onclick="getPosition()">Enable location services</button>
         <p id="location"></p>
         <p>
@@ -47,6 +47,9 @@
         const LAT = position.coords.latitude;
         const LNG = position.coords.longitude;
         let url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${LAT},${LNG}&key=AIzaSyAwvO4w6URyS1Rs15buwNKrF8xCPB9vJRA`;
+        let loc;
+        let town;
+        let country;
         fetch(url)
           .then((response) => response.json())
           .then((data) => {
@@ -54,10 +57,12 @@
             let parts = data.results[0].address_components;
             parts.forEach((part) => {
               if (part.types.includes("postal_town")) {
-                document.body.insertAdjacentHTML("beforeend", "<p>COUNT</p>");
+                town = `${part.long_name}`;
               }
               if (part.types.includes("country")) {
+                country = `${part.long_name}`;
               }
+              x.innerHTML = `${town}, ${country}`;
             });
           })
           .catch((err) => console.warn(err.message));
