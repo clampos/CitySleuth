@@ -50,7 +50,6 @@ li a {
   text-decoration: none;
 }
 
-/* Change the link color to #111 (black) on hover */
 li a:hover {
   background-color: #53699c;
 }
@@ -172,48 +171,6 @@ footer {
   top: 2px;
 }
 
-.dropbtn {
-  background-color: #3498db;
-  color: white;
-  padding: 16px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-}
-
-.dropbtn:hover,
-.dropbtn:focus {
-  background-color: #2980b9;
-}
-
-.dropdown-menu-right {
-  position: relative;
-  float: right;
-}
-
-.dropdown_menu {
-  float: right;
-  padding: 0;
-  margin: 0 0 0 0;
-  display: none;
-  position: relative;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-}
-
-.dropdown_menu a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown_menu a:hover {
-  background-color: #ddd;
-}
-
 .show {
   display: block;
 }
@@ -222,4 +179,28 @@ footer {
   float: right;
   width: 600px;
   height: 600px;
+}
+
+input {
+  width: 400px;
+  padding: 6px;
+  margin-top: 8px;
+  font-size: 17px;
+  border: none;
+  size: 100;
+}
+
+.welcome .bttn {
+  width: 80px;
+  padding: 6px 10px;
+  margin-top: 8px;
+  margin-right: 16px;
+  background: #ddd;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
+
+.welcome .bttn:hover {
+  background: #b6b5b5;
 }

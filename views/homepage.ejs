@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WorldGuide - a fast, free travel recommendation app</title>
+    <title>CitySleuth - a fast, free travel recommendation app</title>
     <link rel="stylesheet" href="stylesheets/styles.css" />
     <script src="mapScript.js"></script>
     <script
@@ -13,61 +13,67 @@
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwvO4w6URyS1Rs15buwNKrF8xCPB9vJRA&callback=initMap"
     ></script>
   </head>
-  <body>
+  <body onload="getPosition()">
     <ul>
-      <li><h1>WorldGuide</h1></li>
+      <li><h1>CitySleuth</h1></li>
       <li style="float: right"><a href="/logout">Logout</a></li>
       <li style="float: right"><a href="#">Contact</a></li>
       <li style="float: right"><a href="#">Update profile</a></li>
     </ul>
     <div class="parent">
       <div class="welcome">
-        <h3>Hello, <%=username%>! Looks like you're in...</h3>
-        <button onclick="getPosition()">Enable location services</button>
+        <h3>Hello, <%=username%>!</h3>
         <p id="location"></p>
-        <p>
-          You have successfully logged in. Please wait while we build the site.
-        </p>
+        <script>
+          // To modify
+          var x = document.getElementById("location");
+          function getPosition() {
+            if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+              x.innerHTML =
+                "Geolocation not supported. Please check your location settings or try a different browser.";
+            }
+          }
+
+          function showPosition(position) {
+            const LAT = position.coords.latitude;
+            const LNG = position.coords.longitude;
+            let url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${LAT},${LNG}&key=AIzaSyAwvO4w6URyS1Rs15buwNKrF8xCPB9vJRA`;
+            let loc;
+            let town;
+            let country;
+            fetch(url)
+              .then((response) => response.json())
+              .then((data) => {
+                console.log(data);
+                let parts = data.results[0].address_components;
+                parts.forEach((part) => {
+                  if (part.types.includes("postal_town")) {
+                    town = `${part.long_name}`;
+                  }
+                  if (part.types.includes("country")) {
+                    country = `${part.long_name}`;
+                  }
+                  x.innerHTML = `Looks like you're in ${town}, ${country}. Want to see what's available near you?`;
+                });
+              })
+              .catch((err) => console.warn(err.message));
+          }
+        </script>
+        <form id="searchbar">
+          <input
+            id="bar"
+            type="text"
+            placeholder="What would you like to find?"
+            name="search"
+          />
+          <input type="submit" value="Let's go!" class="bttn" />
+        </form>
       </div>
     </div>
     <div id="map"></div>
-    <script>
-      // To modify
-      var x = document.getElementById("location");
-      function getPosition() {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(showPosition);
-        } else {
-          x.innerHTML =
-            "Geolocation not supported. Please check your location settings or try a different browser.";
-        }
-      }
 
-      function showPosition(position) {
-        const LAT = position.coords.latitude;
-        const LNG = position.coords.longitude;
-        let url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${LAT},${LNG}&key=AIzaSyAwvO4w6URyS1Rs15buwNKrF8xCPB9vJRA`;
-        let loc;
-        let town;
-        let country;
-        fetch(url)
-          .then((response) => response.json())
-          .then((data) => {
-            console.log(data);
-            let parts = data.results[0].address_components;
-            parts.forEach((part) => {
-              if (part.types.includes("postal_town")) {
-                town = `${part.long_name}`;
-              }
-              if (part.types.includes("country")) {
-                country = `${part.long_name}`;
-              }
-              x.innerHTML = `${town}, ${country}`;
-            });
-          })
-          .catch((err) => console.warn(err.message));
-      }
-    </script>
     <footer>Birkbeck Computer Science MSc Project</footer>
   </body>
 </html>
