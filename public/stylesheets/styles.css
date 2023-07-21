@@ -188,6 +188,8 @@ input {
   font-size: 17px;
   border: none;
   size: 100;
+  border-radius: 3px;
+  transition: all 0.3s ease;
 }
 
 .welcome .bttn {
