@@ -7,6 +7,7 @@
     <title>CitySleuth - a fast, free travel recommendation app</title>
     <link rel="stylesheet" href="stylesheets/styles.css" />
     <script src="mapScript.js"></script>
+    <script src="placeFinder.js"></script>
     <script
       async
       defer
@@ -61,7 +62,7 @@
               .catch((err) => console.warn(err.message));
           }
         </script>
-        <form id="searchbar">
+        <form id="searchbar" action="placeFinder.js" method="post">
           <input
             id="bar"
             type="text"
