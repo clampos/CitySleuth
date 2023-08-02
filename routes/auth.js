@@ -54,6 +54,12 @@ router.get("/logout", (req, res, next) => {
 
 // ----------------------------------------------------
 
+router.get("/contact", (req, res, next) => {
+  res.render("contact");
+});
+
+// ----------------------------------------------------
+
 router.get("/login-failure", (req, res, next) => {
   res.send("You entered the wrong password.");
 });
