@@ -42,6 +42,21 @@ h1 {
   padding: 10px;
 }
 
+h2 {
+  justify-content: center;
+  font-size: 28px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-weight: 520;
+  color: white;
+  padding: 10px;
+  transition: 0.8s;
+}
+
+h2:hover {
+  transform: rotate(360deg);
+}
+
 ul {
   list-style-type: none;
   padding: 0;

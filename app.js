@@ -14,7 +14,9 @@ const methodOverride = require("method-override");
 const MongoStore = require("connect-mongo")(session);
 require("dotenv/config");
 const path = require("path");
-const maps_api_loader = require("@googlemaps/js-api-loader");
+// const maps_api_loader = require("@googlemaps/js-api-loader");
+
+// ----------------------------------------------------
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");

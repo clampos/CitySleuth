@@ -83,15 +83,17 @@ router.post("/register", async (req, res, next) => {
 
   const userExists_1 = await User.findOne({ username: req.body.username });
   if (userExists_1) {
-    return res
-      .status(400)
-      .send({ message: "An account with the same username already exists" }); // Message to be tidied but works
+    return res.status(400).send({
+      message:
+        "An account with the same username already exists. Please go back and try again.",
+    }); // Message to be tidied but works
   }
 
   const userExists_2 = await User.findOne({ email: req.body.email });
   if (userExists_2) {
     return res.status(400).send({
-      message: "An account is already registered to this email address", // Message to be tidied but works
+      message:
+        "An account is already registered to this email address. Please go back and try again.", // Message to be tidied but works
     });
   }
 
