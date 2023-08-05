@@ -43,7 +43,7 @@ function initialise() {
             if (part.types.includes("country")) {
               country = `${part.long_name}`;
             }
-            x.innerHTML = `Looks like you're in ${town}, ${country}. Want to see what's available near you?`;
+            x.innerHTML = `Looks like you're in ${town},&nbsp;${country}.&nbsp;Want to see what's available near you?`;
           });
         })
         .catch((err) => console.warn(err.message));
