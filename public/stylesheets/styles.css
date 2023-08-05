@@ -21,8 +21,10 @@ header {
 }
 
 footer {
-  text-align: center;
-  width: 100vw;
+  box-sizing: border-box;
+  text-align: left;
+  padding-left: 0.5%;
+  width: 100%;
   padding-bottom: 16px;
   padding-top: 16px;
   position: absolute;

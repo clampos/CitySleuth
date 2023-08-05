@@ -60,6 +60,12 @@ router.get("/contact", (req, res, next) => {
 
 // ----------------------------------------------------
 
+router.get("/updateProfile", (req, res, next) => {
+  res.render("updateProfile");
+});
+
+// ----------------------------------------------------
+
 router.get("/login-failure", (req, res, next) => {
   res.send("You entered the wrong password.");
 });

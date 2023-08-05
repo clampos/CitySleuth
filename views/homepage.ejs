@@ -6,61 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CitySleuth - a fast, free travel recommendation app</title>
     <link rel="stylesheet" href="stylesheets/styles.css" />
-    <script src="mapScript.js"></script>
-    <script src="placeFinder.js"></script>
+    <script src="mapFuncs.js"></script>
     <script
       async
       defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwvO4w6URyS1Rs15buwNKrF8xCPB9vJRA&callback=initMap"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwvO4w6URyS1Rs15buwNKrF8xCPB9vJRA&callback=initialise"
     ></script>
   </head>
-  <body onload="getPosition()">
+  <body>
     <ul>
       <li><h1>CitySleuth</h1></li>
       <li style="float: right"><a href="/logout">Logout</a></li>
       <li style="float: right"><a href="/contact">Contact</a></li>
-      <li style="float: right"><a href="#">Update profile</a></li>
+      <li style="float: right"><a href="/updateProfile">Update profile</a></li>
+      <li style="float: right"><a href="/home">Home</a></li>
     </ul>
     <div class="welcome">
-      <h3>Hello, <%=username%>!</h3>
+      <h3>Hello,&nbsp;<%=username%>!</h3>
       <p id="location"></p>
-      <script>
-        // To modify
-        var x = document.getElementById("location");
-        function getPosition() {
-          if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition);
-          } else {
-            x.innerHTML =
-              "Geolocation not supported. Please check your location settings or try a different browser.";
-          }
-        }
-
-        function showPosition(position) {
-          const LAT = position.coords.latitude;
-          const LNG = position.coords.longitude;
-          let url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${LAT},${LNG}
-                                                                              &key=AIzaSyAwvO4w6URyS1Rs15buwNKrF8xCPB9vJRA`;
-          let town;
-          let country;
-          fetch(url)
-            .then((response) => response.json())
-            .then((data) => {
-              console.log(data);
-              let parts = data.results[0].address_components;
-              parts.forEach((part) => {
-                if (part.types.includes("postal_town")) {
-                  town = `${part.long_name}`;
-                }
-                if (part.types.includes("country")) {
-                  country = `${part.long_name}`;
-                }
-                x.innerHTML = `Looks like you're in ${town}, ${country}. Want to see what's available near you?`;
-              });
-            })
-            .catch((err) => console.warn(err.message));
-        }
-      </script>
       <form id="searchbar">
         <input
           id="userInput"
@@ -76,57 +39,14 @@
         />
       </form>
       <div id="results"></div>
-      <script>
-        // To modify
-        var y = document.getElementById("results");
-        function getPosition() {
-          if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition);
-          } else {
-            x.innerHTML =
-              "Geolocation not supported. Please check your location settings or try a different browser.";
-          }
-        }
-
-        function getResults() {
-          const LAT = position.coords.latitude;
-          const LNG = position.coords.longitude;
-          const searchItem = document.getElementById("userInput").value;
-          let url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json
-                  ?keyword=${searchItem}
-                  &location=${LAT},${LNG}
-                  &radius=1500
-                  &type=${searchItem}
-                  &key=AIzaSyAwvO4w6URyS1Rs15buwNKrF8xCPB9vJRA`;
-
-          fetch(url)
-            .then((response) => response.json())
-            .then((data) => {
-              console.log(data);
-              let parts = data.results[0].address_components;
-              parts.forEach((part) => {
-                if (part.types.includes("postal_town")) {
-                  town = `${part.long_name}`;
-                }
-                if (part.types.includes("country")) {
-                  country = `${part.long_name}`;
-                }
-                y.innerHTML = "Does this work?";
-              });
-            })
-            .catch((err) => console.warn(err.message));
-        }
-      </script>
       <br />
       <p>
-        To improve your experience on the site, please consider updating your
-        preferences at the "Update profile" link above so that we can provide
-        tailored search results.
+        To improve your experience on the site,&nbsp;please consider updating
+        your preferences at the "Update profile" link above so that we can
+        provide tailored search results.
       </p>
     </div>
-
     <div id="map"></div>
-
     <footer>Birkbeck Computer Science MSc Project</footer>
   </body>
 </html>
