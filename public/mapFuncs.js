@@ -1,3 +1,6 @@
+const { Client } = require("@googlemaps/google-maps-services-js");
+const client = new Client({});
+
 function initialise() {
   var x = document.getElementById("location");
   // alert(
