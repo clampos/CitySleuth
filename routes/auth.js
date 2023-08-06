@@ -67,6 +67,12 @@ router.get("/updateProfile", (req, res, next) => {
 
 // ----------------------------------------------------
 
+router.get("/dashboard", (req, res, next) => {
+  res.render("dashboard");
+});
+
+// ----------------------------------------------------
+
 router.get("/login-failure", (req, res, next) => {
   res.send("You entered the wrong password.");
 });
