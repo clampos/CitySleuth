@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CitySleuth - a fast, free travel recommendation app</title>
     <link rel="stylesheet" href="stylesheets/styles.css" />
-    <script src="mapFuncs.js"></script>
+    <script src="browserFunctions.js"></script>
     <script
       async
       defer
@@ -24,19 +24,14 @@
     <div class="welcome">
       <h3>Hello,&nbsp;<%=username%>!</h3>
       <p id="location"></p>
-      <form id="searchbar">
+      <form action="/getPlaces" id="searchbar">
         <input
           id="userInput"
           type="text"
           placeholder="What would you like to find?"
           name="search"
         />
-        <input
-          type="submit"
-          class="bttn"
-          value="Let's go!"
-          onclick="placeResults()"
-        />
+        <input type="submit" class="bttn" value="Let's go!" />
       </form>
       <div id="results"></div>
       <br />

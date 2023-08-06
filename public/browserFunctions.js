@@ -1,6 +1,3 @@
-const { Client } = require("@googlemaps/google-maps-services-js");
-const client = new Client({});
-
 function initialise() {
   var x = document.getElementById("location");
   // alert(
@@ -47,62 +44,10 @@ function initialise() {
           });
         })
         .catch((err) => console.warn(err.message));
-
-      placeResults();
     },
     function (positionError) {
       myMap.setCenter(new google.maps.LatLng(51.507, 0.1232));
       myMap.setZoom(10);
     }
   );
-}
-
-// ----------------------------------------------------
-
-async function placeResults() {
-  navigator.geolocation.getCurrentPosition(async function (position) {
-    const searchItem = document.getElementById("userInput").value;
-    let url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json
-                  ?location=${position.coords.latitude},${position.coords.longitude}
-                  &radius=1500
-                  &type=${searchItem}
-                  key=AIzaSyAwvO4w6URyS1Rs15buwNKrF8xCPB9vJRA`;
-
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        let places = data.results.map(extractPOIInfo);
-        var y = document.getElementById("results");
-        y.innerHTML = places;
-      })
-      .catch((err) =>
-        alert(
-          "Oops, looks like there's an error getting your results",
-          err.message
-        )
-      );
-  });
-}
-// ----------------------------------------------------
-
-function extractPOIInfo(place) {
-  const name = place.name;
-
-  const formattedAddress = place.formattedAddress;
-
-  const type = place.types[0];
-
-  const geometry = place.geometry;
-
-  const latitude = geometry.location.lat();
-
-  const longitude = geometry.location.lng();
-
-  return {
-    name,
-    formattedAddress,
-    type,
-    latitude,
-    longitude,
-  };
 }

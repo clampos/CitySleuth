@@ -14,6 +14,7 @@ const registerValidation =
 const bcrypt = require("bcryptjs");
 const flash = require("express-flash");
 const methodOverride = require("method-override");
+const axios = require("axios");
 
 // ----------------------------------------------------
 // GET routes
@@ -68,6 +69,20 @@ router.get("/updateProfile", (req, res, next) => {
 
 router.get("/login-failure", (req, res, next) => {
   res.send("You entered the wrong password.");
+});
+
+// ----------------------------------------------------
+
+router.get("/getPlaces", (req, res, next) => {
+  try {
+    const { data } = axios.get(
+      `https://maps.googleapis.com/maps/api/place/nearbysearch/json?
+      location=${position.coords.latitude},${position.coords.longitude} // Need to get user location from browser using fetch() API
+      &radius=4800
+      &type=${searchItem}
+      &key=AIzaSyAwvO4w6URyS1Rs15buwNKrF8xCPB9vJRA`
+    );
+  } catch (error) {}
 });
 
 // ----------------------------------------------------
