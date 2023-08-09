@@ -81,6 +81,7 @@ li a:hover {
 }
 
 .welcome {
+  text-align: justify;
   float: left;
   width: 30vw;
   padding: 20px;
@@ -91,6 +92,7 @@ li a:hover {
 }
 
 .reg_login_welcome {
+  text-align: justify;
   float: left;
   width: 50%;
   padding: 20px;

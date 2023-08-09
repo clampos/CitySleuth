@@ -6,6 +6,7 @@ const router = express.Router();
 const passport = require("passport");
 const connection = require("../config/database");
 const User = connection.models.User;
+const VisitedPlace = connection.models.VisitedPlace;
 const bodyParser = require("body-parser");
 const { check, validationResult } = require("express-validator");
 const joi = require("joi");
@@ -69,7 +70,7 @@ router.get("/updateProfile", (req, res, next) => {
 // ----------------------------------------------------
 
 router.get("/dashboard", (req, res, next) => {
-  res.render("dashboard");
+  res.render("dashboard", { username: req.user.username });
 });
 
 // ----------------------------------------------------
@@ -78,55 +79,6 @@ router.get("/login-failure", (req, res, next) => {
   res.send("You entered the wrong password.");
 });
 
-// ----------------------------------------------------
-
-router.post("/search-places", (req, res, next) => {
-  const { latitude, longitude, keyword } = req.body;
-
-  // Structure Google Places API call based on the received coordinates and keyword
-  const googlePlacesAPIUrl = `https://maps.googleapis.com/maps/api/place/textsearch/json?location=${latitude},${longitude}&radius=5000&query=${encodeURIComponent(
-    keyword
-  )}&key=AIzaSyAwvO4w6URyS1Rs15buwNKrF8xCPB9vJRA`;
-
-  // Make API call to Google Places API using fetch
-  fetch(googlePlacesAPIUrl)
-    .then((response) => response.json())
-    .then((data) => {
-      // Process the Google Places API response and send it back to the client
-      res.json(data);
-      console.log(data);
-    })
-    .catch((error) => {
-      // Handle any errors that occur during the fetch
-      res.status(500).json({
-        error: "500 error :(",
-      });
-    });
-});
-
-router.post("/mark-visited", (req, res) => {
-  const { placeId } = req.body;
-
-  const visitedPlace = new visitedPlace({
-    placeId: placeId,
-    placeName: placeName,
-    placeAddress: placeAddress,
-    placeRating: placeRating,
-    userId: req.user._id,
-  });
-
-  visitedPlace
-    .save()
-    .then((savedPlace) => {
-      User.updateOne(
-        { _id: req.params._id },
-        { $push: { visitedPlaces: savedPlace._id } }
-      );
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-});
 // ----------------------------------------------------
 // POST routes
 // ----------------------------------------------------
@@ -182,6 +134,56 @@ router.post(
     failureFlash: true,
   })
 );
+
+// ----------------------------------------------------
+
+router.post("/searchPlaces", async (req, res, next) => {
+  const { latitude, longitude, keyword } = req.body;
+
+  // Structure Google Places API call based on the received coordinates and keyword
+  const googlePlacesAPIUrl = `https://maps.googleapis.com/maps/api/place/textsearch/json?location=${latitude},${longitude}&radius=5000&query=${encodeURIComponent(
+    keyword
+  )}&key=AIzaSyAwvO4w6URyS1Rs15buwNKrF8xCPB9vJRA`;
+
+  // Make API call to Google Places API using fetch
+  fetch(googlePlacesAPIUrl)
+    .then((response) => response.json())
+    .then((data) => {
+      // Process the Google Places API response and send it back to the client
+      res.json(data);
+      console.log(data);
+    })
+    .catch((error) => {
+      // Handle any errors that occur during the fetch
+      res.status(500).json({
+        error: "500 error :(",
+      });
+    });
+});
+
+// ----------------------------------------------------
+
+router.post("/markVisited", async (req, res, next) => {
+  const placeName = req.body;
+
+  try {
+    const newPlace = await new VisitedPlace({
+      placeName: req.body.placeName,
+      userId: req.user._id,
+    });
+
+    newPlace
+      .save()
+      .then(
+        User.updateOne(
+          { _id: req.user._id },
+          { $push: { visitedPlaces: newPlace._id } }
+        )
+      );
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 // ----------------------------------------------------
 

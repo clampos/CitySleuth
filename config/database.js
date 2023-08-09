@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema({
     max: 20,
   },
   visitedPlaces: [
-    { type: mongoose.Schema.Types.ObjectId, ref: "visitedPlace" },
+    { type: mongoose.Schema.Types.ObjectId, ref: "VisitedPlace" },
   ],
   date: {
     type: Date,
@@ -39,12 +39,12 @@ const userSchema = new mongoose.Schema({
 });
 
 const visitedPlaceSchema = new mongoose.Schema({
-  placeId: String,
+  placeName: String,
   userId: String,
 });
 
 const User = connection.model("User", userSchema);
 
-const visitedPlace = mongoose.model("visitedPlace", visitedPlaceSchema);
+const VisitedPlace = connection.model("VisitedPlace", visitedPlaceSchema);
 
 module.exports = connection;
