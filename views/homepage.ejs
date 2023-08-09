@@ -7,13 +7,18 @@
     <title>CitySleuth - a fast, free travel recommendation app</title>
     <link rel="stylesheet" href="stylesheets/styles.css" />
     <script src="browserFunctions.js"></script>
-    <script
-      async
-      defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwvO4w6URyS1Rs15buwNKrF8xCPB9vJRA&callback=initialise"
-    ></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwvO4w6URyS1Rs15buwNKrF8xCPB9vJRA&libraries=places"></script>
+    <style>
+
+main {
+  display: flex;
+  flex-flow: row;
+  min-height: 100vh;
+  overflow-y: scroll;
+}
+    </style>
   </head>
-  <body>
+  <body onload="initialise()">
     <ul>
       <li><h2>CitySleuth</h2></li>
       <li style="float: right"><a href="/logout">Logout</a></li>
@@ -22,27 +27,135 @@
       <li style="float: right"><a href="/dashboard">Dashboard</a></li>
       <li style="float: right"><a href="/home">Home</a></li>
     </ul>
-    <div class="welcome">
-      <h3>Hello,&nbsp;<%=username%>!</h3>
-      <p id="location"></p>
-      <form action="/getPlaces" id="searchbar">
-        <input
-          id="userInput"
-          type="text"
-          placeholder="What would you like to find?"
-          name="search"
-        />
-        <input type="submit" class="bttn" value="Let's go!" />
-      </form>
-      <div id="results"></div>
-      <br />
-      <p>
-        To improve your experience on the site,&nbsp;please consider updating
-        your preferences at the "Update profile" link above so that we can
-        provide tailored search results.
-      </p>
-    </div>
-    <div id="map"></div>
+
+      <main>
+        <aside>
+          <div class="welcome">
+            <h3>Hello,&nbsp;<%=username%>!</h3>
+            <p id="location"></p>
+            <br>
+            Search anything from museums,&nbsp;to restaurants,&nbsp;to parks,&nbsp;to train stations!&nbsp;The application will then bring up your search results within your area,&nbsp;and then you have the option to mark them as visited.
+            <br>
+            <br>
+            Check your Dashboard to see an up-to-date travel diary - and see how many places you've visited!
+            </div>
+      <div id="searchForm">
+        <input type="text" id="searchKeyword" placeholder="What would you like to find?">
+        <button id="searchButton">Let's go!</button>
+      </div>
+    </aside>
+    <aside>
+      <div id="resultsColumn">
+        <div id="results"></div>
+      </aside>
+      <article>
+      <div id="mapContainer"></div>
+      </article>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+      const searchButton = document.getElementById('searchButton');
+      const searchKeyword = document.getElementById('searchKeyword');
+      const resultsDiv = document.getElementById('results');
+      const mapContainer = document.getElementById('mapContainer');
+  
+      let map;
+      let markers = [];
+      var LAT;
+      var LNG;
+      function initMap() {
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          LAT = position.coords.latitude;
+          LNG = position.coords.longitude
+            map = new google.maps.Map(mapContainer, {  
+              center: { lat: LAT, lng: LNG },
+              zoom: 15
+            })
+        })
+    ;
+    }
+
+      const markVisitedButtons = document.querySelectorAll('.mark-visited');
+      markVisitedButtons.forEach(button => {
+      button.addEventListener('click', function() {
+      const placeId = this.getAttribute('data-place-id');
+      markVisited(placeId);
+      });
+    });
+
+    function markVisited(placeId) {
+      fetch(`/mark-visited`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ placeId })
+          })
+          .then(response => response.json())
+          .then(data => {
+            // Handle response, update UI, etc.
+          })
+          .catch(error => {
+            // Handle any errors
+          });
+        }
+  
+  searchButton.addEventListener('click', function() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        const keyword = searchKeyword.value;
+        
+        fetch('/search-places', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ latitude, longitude, keyword })
+        })
+        .then(response => response.json())
+        .then(data => {
+          resultsDiv.innerHTML = '';
+          markers.forEach(marker => marker.setMap(null));
+          markers = [];
+
+          data.results.forEach(result => {
+            const placeName = result.name;
+            const placeAddress = result.formatted_address;
+            const placeRating = result.rating || 'N/A';
+            const placeLatLng = result.geometry.location;
+
+            const placeDiv = document.createElement('div');
+            placeDiv.innerHTML = `<strong>${placeName}</strong><br>Address: ${placeAddress}<br>Rating: ${placeRating}
+            <button class="mark-visited" data-place-id="${result.place_id}">Mark as Visited</button>`;
+            
+            resultsDiv.appendChild(placeDiv);
+            
+            const marker = new google.maps.Marker({
+              position: placeLatLng,
+              map: map,
+              title: placeName
+            });
+            
+            markers.push(marker);
+          });
+
+          const bounds = new google.maps.LatLngBounds();
+          markers.forEach(marker => bounds.extend(marker.getPosition()));
+          map.fitBounds(bounds);
+        })
+        .catch(error => {
+          console.log(error)
+        });
+      });
+    }
+  });
+  
+  initMap();
+});
+    </script>
+    </main>
     <footer>Birkbeck Computer Science MSc Project</footer>
   </body>
 </html>

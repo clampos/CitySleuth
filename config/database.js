@@ -29,12 +29,22 @@ const userSchema = new mongoose.Schema({
     min: 6,
     max: 20,
   },
+  visitedPlaces: [
+    { type: mongoose.Schema.Types.ObjectId, ref: "visitedPlace" },
+  ],
   date: {
     type: Date,
     default: Date.now,
   },
 });
 
+const visitedPlaceSchema = new mongoose.Schema({
+  placeId: String,
+  userId: String,
+});
+
 const User = connection.model("User", userSchema);
+
+const visitedPlace = mongoose.model("visitedPlace", visitedPlaceSchema);
 
 module.exports = connection;

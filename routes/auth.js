@@ -15,6 +15,7 @@ const bcrypt = require("bcryptjs");
 const flash = require("express-flash");
 const methodOverride = require("method-override");
 const axios = require("axios");
+const https = require("https");
 
 // ----------------------------------------------------
 // GET routes
@@ -79,18 +80,53 @@ router.get("/login-failure", (req, res, next) => {
 
 // ----------------------------------------------------
 
-router.get("/getPlaces", (req, res, next) => {
-  try {
-    const { data } = axios.get(
-      `https://maps.googleapis.com/maps/api/place/nearbysearch/json?
-      location=${position.coords.latitude},${position.coords.longitude} // Need to get user location from browser using fetch() API
-      &radius=4800
-      &type=${searchItem}
-      &key=AIzaSyAwvO4w6URyS1Rs15buwNKrF8xCPB9vJRA`
-    );
-  } catch (error) {}
+router.post("/search-places", (req, res, next) => {
+  const { latitude, longitude, keyword } = req.body;
+
+  // Structure Google Places API call based on the received coordinates and keyword
+  const googlePlacesAPIUrl = `https://maps.googleapis.com/maps/api/place/textsearch/json?location=${latitude},${longitude}&radius=5000&query=${encodeURIComponent(
+    keyword
+  )}&key=AIzaSyAwvO4w6URyS1Rs15buwNKrF8xCPB9vJRA`;
+
+  // Make API call to Google Places API using fetch
+  fetch(googlePlacesAPIUrl)
+    .then((response) => response.json())
+    .then((data) => {
+      // Process the Google Places API response and send it back to the client
+      res.json(data);
+      console.log(data);
+    })
+    .catch((error) => {
+      // Handle any errors that occur during the fetch
+      res.status(500).json({
+        error: "500 error :(",
+      });
+    });
 });
 
+router.post("/mark-visited", (req, res) => {
+  const { placeId } = req.body;
+
+  const visitedPlace = new visitedPlace({
+    placeId: placeId,
+    placeName: placeName,
+    placeAddress: placeAddress,
+    placeRating: placeRating,
+    userId: req.user._id,
+  });
+
+  visitedPlace
+    .save()
+    .then((savedPlace) => {
+      User.updateOne(
+        { _id: req.params._id },
+        { $push: { visitedPlaces: savedPlace._id } }
+      );
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
 // ----------------------------------------------------
 // POST routes
 // ----------------------------------------------------

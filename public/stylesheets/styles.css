@@ -27,7 +27,7 @@ footer {
   width: 100%;
   padding-bottom: 16px;
   padding-top: 16px;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   background-color: #8e6167;
 }
@@ -225,4 +225,51 @@ input {
 
 .welcome .bttn:hover {
   background: #b6b5b5;
+}
+
+#resultsColumn {
+  width: 400px;
+  overflow: auto;
+  padding: 20px;
+}
+
+aside:nth-child(1) {
+  flex: 0 0 200px;
+}
+
+aside :nth-child(2) {
+  flex: 0 0 250px;
+}
+
+article {
+  flex: 1 0 auto;
+}
+
+#mapContainer {
+  float: right;
+  width: 90%;
+  height: 90%;
+  padding: 20px;
+  max-height: 80vh;
+}
+
+#results {
+  overflow: auto;
+  color: white;
+  max-height: 80vh;
+}
+
+#searchKeyword {
+  margin-left: 20px;
+}
+
+#searchButton {
+  width: 80px;
+  padding: 6px 10px;
+  margin-top: 8px;
+  margin-right: 16px;
+  background: #ddd;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
 }
