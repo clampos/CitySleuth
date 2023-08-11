@@ -23,18 +23,24 @@
     <br />
     <div id="table_div">
       <table>
-        <tr>
-          <th>Place ID</th>
-          <th>Place Name</th>
-          <th>Place Address</th>
-        </tr>
-        <%user.visitedPlaces.forEach(place => {%>
-        <tr>
-          <td><%= place.placeId %></td>
-          <td><%= place.placeName %></td>
-          <td><%= place.placeAddress %></td>
-        </tr>
-        <%})%>
+        <thead>
+          <tr>
+            <th>Place ID</th>
+            <th>Place Name</th>
+            <th>Place Address</th>
+            <th>Date Visited</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%user.visitedPlaces.forEach(place => {%>
+          <tr>
+            <td><%= place.placeId %></td>
+            <td><%= place.placeName %></td>
+            <td><%= place.placeAddress %></td>
+            <td><%= place.date.toLocaleDateString() %></td>
+          </tr>
+          <%})%>
+        </tbody>
       </table>
     </div>
     <footer>Birkbeck Computer Science MSc Project</footer>

@@ -277,12 +277,22 @@ article {
 }
 
 #table_div {
+  max-height: 70vh;
+  overflow-y: auto;
   clear: both;
-  padding: 20px;
 }
+
+.table_div thead th {
+  position: sticky;
+  top: 0;
+  width: 100%;
+}
+
 table {
+  margin-left: auto;
+  margin-right: auto;
   text-align: justify;
-  position: relative;
+  position: sticky;
   border-collapse: collapse;
   background-color: #f6f6f6;
 }
@@ -292,7 +302,7 @@ th {
   padding: 20px;
 }
 th {
-  background: grey;
+  background: #2c3853;
   color: white;
   border-radius: 0;
   position: sticky;

@@ -15,6 +15,10 @@ const visitedPlaceSchema = new mongoose.Schema({
   placeName: String,
   placeAddress: String,
   userId: String,
+  date: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 const userSchema = new mongoose.Schema({
