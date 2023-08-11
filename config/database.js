@@ -40,6 +40,7 @@ const userSchema = new mongoose.Schema({
 
 const visitedPlaceSchema = new mongoose.Schema({
   placeName: String,
+  placeAddress: String,
   userId: String,
 });
 

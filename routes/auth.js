@@ -164,9 +164,8 @@ router.post("/searchPlaces", async (req, res, next) => {
 // ----------------------------------------------------
 
 router.post("/markVisited", async (req, res, next) => {
-  const placeName = req.body;
-
   try {
+    const placeName = req.body;
     const newPlace = await new VisitedPlace({
       placeName: req.body.placeName,
       userId: req.user._id,
@@ -177,7 +176,7 @@ router.post("/markVisited", async (req, res, next) => {
       .then(
         User.updateOne(
           { _id: req.user._id },
-          { $push: { visitedPlaces: newPlace._id } }
+          { $push: { visitedPlaces: newPlace.placeName } }
         )
       );
   } catch (error) {

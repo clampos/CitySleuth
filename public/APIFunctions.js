@@ -53,38 +53,13 @@ document.addEventListener("DOMContentLoaded", async function () {
 
               const placeDiv = document.createElement("div");
               placeDiv.innerHTML = `<strong>${placeName}</strong><br>Address: ${placeAddress}<br>Rating: ${placeRating}
-          <button class="visitor" data-place-id="${result.place_id}" placeName="${result.name}" placeAddress="${result.formatted_address}">Mark as Visited</button><br><br>`;
+          <button class="mark-visited" data-place-id="${result.place_id}" placeName="${result.name}" placeAddress="${result.formatted_address}">Mark as Visited</button><br><br>`;
 
               resultsDiv.appendChild(placeDiv);
 
-              const markVisitedButtons = document.querySelectorAll(".visitor");
-              markVisitedButtons.forEach((button) => {
-                button.addEventListener("click", function () {
-                  console.log("eventlister");
-                  const placeId = this.getAttribute("data-place-id");
-                  const placeName = this.getAttribute("placeName");
-                  const placeAddress = this.getAttribute("placeAddress");
-                  markVisited(placeName);
-                });
-              });
+              // ----------------------------------------------------
 
-              function markVisited(placeName) {
-                console.log("fetch function");
-                fetch(`/markVisited`, {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({ placeName }),
-                })
-                  .then((response) => response.json())
-                  .then((data) => {
-                    console.log(data);
-                  })
-                  .catch((error) => {
-                    console.log(error);
-                  });
-              }
+              // ----------------------------------------------------
 
               const marker = new google.maps.Marker({
                 position: placeLatLng,
@@ -108,11 +83,38 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   // ----------------------------------------------------
 
-  // ----------------------------------------------------
-
-  // ----------------------------------------------------
-
   initMap();
 
   // ----------------------------------------------------
 });
+
+const markVisitedButtonsContainer = document.querySelector("#results");
+markVisitedButtonsContainer.addEventListener("click", function (event) {
+  if (event.target.classList.contains("mark-visited")) {
+    console.log("eventlistener");
+    const placeId = this.getAttribute("data-place-id");
+    const placeName = this.getAttribute("placeName");
+    const placeAddress = this.getAttribute("placeAddress");
+    markVisited(placeName);
+  }
+});
+
+// ----------------------------------------------------
+
+function markVisited(placeName) {
+  console.log("fetch function");
+  fetch(`/markVisited`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ placeName }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
