@@ -18,6 +18,23 @@
     <div class="reg_login_welcome">
       <p>Hi,&nbsp;<%=username%> - your travel diary will soon show here.</p>
     </div>
+    <br />
+    <div id="table_div">
+      <table>
+        <tr>
+          <th>Place ID</th>
+          <th>Place Name</th>
+          <th>Place Address</th>
+        </tr>
+        <%user.visitedPlaces.forEach(place => {%>
+        <tr>
+          <td><%= place.placeId %></td>
+          <td><%= place.placeName %></td>
+          <td><%= place.placeAddress %></td>
+        </tr>
+        <%})%>
+      </table>
+    </div>
     <footer>Birkbeck Computer Science MSc Project</footer>
   </body>
 </html>

@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
               const placeDiv = document.createElement("div");
               placeDiv.innerHTML = `<strong>${placeName}</strong><br>Address: ${placeAddress}<br>Rating: ${placeRating}
-          <button class="mark-visited" data-place-id="${result.place_id}" placeName="${result.name}" placeAddress="${result.formatted_address}">Mark as Visited</button><br><br>`;
+          <button class="mark-visited" placeId="${result.place_id}" placeName="${result.name}" placeAddress="${result.formatted_address}">Mark as Visited</button><br><br>`;
 
               resultsDiv.appendChild(placeDiv);
 
@@ -92,23 +92,24 @@ const markVisitedButtonsContainer = document.querySelector("#results");
 markVisitedButtonsContainer.addEventListener("click", function (event) {
   if (event.target.classList.contains("mark-visited")) {
     console.log("eventlistener");
-    const placeId = this.getAttribute("data-place-id");
-    const placeName = this.getAttribute("placeName");
-    const placeAddress = this.getAttribute("placeAddress");
-    markVisited(placeName);
+    const placeId = event.target.getAttribute("placeId");
+    const placeName = event.target.getAttribute("placeName");
+    const placeAddress = event.target.getAttribute("placeAddress");
+    console.log(placeId, placeName, placeAddress);
+    markVisited(placeId, placeName, placeAddress);
   }
 });
 
 // ----------------------------------------------------
 
-function markVisited(placeName) {
+function markVisited(placeId, placeName, placeAddress) {
   console.log("fetch function");
   fetch(`/markVisited`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ placeName }),
+    body: JSON.stringify({ placeId, placeName, placeAddress }),
   })
     .then((response) => response.json())
     .then((data) => {

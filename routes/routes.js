@@ -70,7 +70,9 @@ router.get("/updateProfile", (req, res, next) => {
 // ----------------------------------------------------
 
 router.get("/dashboard", (req, res, next) => {
-  res.render("dashboard", { username: req.user.username });
+  User.findOne({ _id: req.user._id }, function (err, user) {
+    res.render("dashboard", { username: req.user.username, user: user });
+  });
 });
 
 // ----------------------------------------------------
@@ -164,24 +166,30 @@ router.post("/searchPlaces", async (req, res, next) => {
 // ----------------------------------------------------
 
 router.post("/markVisited", async (req, res, next) => {
-  try {
-    const placeName = req.body;
-    const newPlace = await new VisitedPlace({
-      placeName: req.body.placeName,
-      userId: req.user._id,
-    });
+  const newPlace = new VisitedPlace({
+    placeId: req.body.placeId,
+    placeName: req.body.placeName,
+    placeAddress: req.body.placeAddress,
+    userId: req.user._id,
+  });
 
-    newPlace
-      .save()
-      .then(
-        User.updateOne(
-          { _id: req.user._id },
-          { $push: { visitedPlaces: newPlace.placeName } }
-        )
-      );
-  } catch (error) {
-    console.log(error);
-  }
+  await newPlace.save();
+
+  User.findOneAndUpdate(
+    { _id: req.user._id },
+    {
+      $push: {
+        visitedPlaces: {
+          placeId: req.body.placeId,
+          placeName: req.body.placeName,
+          placeAddress: req.body.placeAddress,
+        },
+      },
+    },
+    { new: true }
+  ).then((user) => {
+    console.log(user);
+  });
 });
 
 // ----------------------------------------------------

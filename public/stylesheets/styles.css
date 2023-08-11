@@ -275,3 +275,27 @@ article {
   border: none;
   cursor: pointer;
 }
+
+#table_div {
+  clear: both;
+  padding: 20px;
+}
+table {
+  text-align: justify;
+  position: relative;
+  border-collapse: collapse;
+  background-color: #f6f6f6;
+}
+td,
+th {
+  border: 1px solid #999;
+  padding: 20px;
+}
+th {
+  background: grey;
+  color: white;
+  border-radius: 0;
+  position: sticky;
+  top: 0;
+  padding: 10px;
+}

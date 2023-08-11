@@ -7,14 +7,13 @@ const app = express();
 const mongoose = require("mongoose");
 const session = require("express-session");
 const passport = require("passport");
-const routes = require("./routes/auth");
+const routes = require("./routes/routes");
 const connection = require("./config/database");
 const flash = require("express-flash");
 const methodOverride = require("method-override");
 const MongoStore = require("connect-mongo")(session);
 require("dotenv/config");
 const path = require("path");
-// const maps_api_loader = require("@googlemaps/js-api-loader");
 
 // ----------------------------------------------------
 
