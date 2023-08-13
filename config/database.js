@@ -43,7 +43,7 @@ const userSchema = new mongoose.Schema({
   visitedPlaces: [visitedPlaceSchema],
   date: {
     type: Date,
-    default: new Date(),
+    default: Date.now,
   },
 });
 
