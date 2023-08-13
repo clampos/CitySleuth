@@ -261,6 +261,15 @@ article {
   max-height: 80vh;
 }
 
+#results div:hover {
+  background-color: #53699c;
+}
+
+.mark-visited {
+  float: right;
+  margin-right: 10px;
+}
+
 #searchKeyword {
   margin-left: 20px;
 }

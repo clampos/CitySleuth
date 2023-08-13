@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
               const placeDiv = document.createElement("div");
               placeDiv.innerHTML = `<strong>${placeName}</strong><br>Address: ${placeAddress}<br>Rating: ${placeRating}
-          <button class="mark-visited" placeId="${result.place_id}" placeName="${result.name}" placeAddress="${result.formatted_address}">Mark as Visited</button><br><br>`;
+          <button class="mark-visited" placeId="${result.place_id}" placeName="${result.name}" placeAddress="${result.formatted_address}">Mark as visited</button><br><br>`;
 
               resultsDiv.appendChild(placeDiv);
 
