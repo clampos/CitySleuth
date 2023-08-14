@@ -63,8 +63,8 @@ router.get("/contact", (req, res, next) => {
 
 // ----------------------------------------------------
 
-router.get("/updateProfile", (req, res, next) => {
-  res.render("updateProfile");
+router.get("/account-settings", (req, res, next) => {
+  res.render("accountSettings");
 });
 
 // ----------------------------------------------------
@@ -120,9 +120,9 @@ router.post("/register", async (req, res, next) => {
       console.log(user);
     });
 
-    res.redirect("./login");
+    res.redirect("/login");
   } catch {
-    res.redirect("./register");
+    res.redirect("/register");
   }
 });
 
@@ -139,7 +139,7 @@ router.post(
 
 // ----------------------------------------------------
 
-router.post("/searchPlaces", async (req, res, next) => {
+router.post("/place-search", async (req, res, next) => {
   const { latitude, longitude, keyword } = req.body;
 
   // Structure Google Places API call based on the received coordinates and keyword
@@ -165,7 +165,7 @@ router.post("/searchPlaces", async (req, res, next) => {
 
 // ----------------------------------------------------
 
-router.post("/markVisited", async (req, res, next) => {
+router.post("/marked-visited", async (req, res, next) => {
   const newPlace = new VisitedPlace({
     placeId: req.body.placeId,
     placeName: req.body.placeName,
@@ -193,5 +193,25 @@ router.post("/markVisited", async (req, res, next) => {
 });
 
 // ----------------------------------------------------
+// DELETE routes
+// ----------------------------------------------------
+router.delete("/user-deletion/:username", async (req, res, next) => {
+  console.log(req.params.username);
+  const uname = req.params.username;
+
+  if (uname != req.user.username) {
+    console.log("401 error: Wrong username entered");
+  } else {
+    try {
+      deletedUser = await User.deleteOne({
+        username: req.params.username,
+      });
+      console.log(deletedUser);
+      res.render("login");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+});
 
 module.exports = router;

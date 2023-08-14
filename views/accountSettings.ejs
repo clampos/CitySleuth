@@ -11,13 +11,19 @@
       <li><h2>CitySleuth</h2></li>
       <li style="float: right"><a href="/logout">Logout</a></li>
       <li style="float: right"><a href="/contact">Contact</a></li>
-      <li style="float: right"><a href="/updateProfile">Update profile</a></li>
+      <li style="float: right">
+        <a href="/account-settings">Account Settings</a>
+      </li>
       <li style="float: right"><a href="/dashboard">Dashboard</a></li>
       <li style="float: right"><a href="/home">Home</a></li>
     </ul>
     <div class="reg_login_welcome">
-      <p>This page is being developed.&nbsp;Please check soon for updates.</p>
+      <h3>Do you want to delete your account?</h3>
+      <p>Please confirm your username and press "Confirm":</p>
+      <input type="text" id="deleteInput" placeholder="Enter username" />
+      <input type="submit" id="deleteButton" value="Confirm" />
     </div>
     <footer>Birkbeck Computer Science MSc Project</footer>
+    <script src="userFunctions.js"></script>
   </body>
 </html>

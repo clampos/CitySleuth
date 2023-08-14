@@ -293,6 +293,17 @@ article {
   cursor: pointer;
 }
 
+#deleteButton {
+  width: 80px;
+  padding: 6px 10px;
+  margin-top: 8px;
+  margin-right: 16px;
+  background: #ddd;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
+
 #table_div {
   max-height: 70vh;
   overflow-y: auto;

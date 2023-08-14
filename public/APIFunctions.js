@@ -23,16 +23,16 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   // ----------------------------------------------------
 
-  searchButton.addEventListener("click", function () {
+  searchButton.addEventListener("click", function (event) {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function (position) {
+      navigator.geolocation.getCurrentPosition(async function (position) {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
         const keyword = searchKeyword.value;
 
         // ----------------------------------------------------
 
-        fetch("/searchPlaces", {
+        await fetch("/place-search", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -104,7 +104,7 @@ markVisitedButtonsContainer.addEventListener("click", function (event) {
 
 function markVisited(placeId, placeName, placeAddress) {
   console.log("fetch function");
-  fetch(`/markVisited`, {
+  fetch(`/marked-visited`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
