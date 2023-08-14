@@ -9,6 +9,11 @@ body {
   background-color: #31485f;
   min-height: 100vh;
   min-width: 100vw;
+  overflow-y: hidden;
+}
+
+main {
+  overflow-y: hidden;
 }
 
 header {
@@ -245,9 +250,12 @@ aside :nth-child(2) {
 
 article {
   flex: 1 0 auto;
+  overflow-y: hidden;
 }
 
 #mapContainer {
+  overflow-y: hidden;
+  margin-right: 10px;
   float: right;
   width: 90%;
   height: 90%;

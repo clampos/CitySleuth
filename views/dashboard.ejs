@@ -37,7 +37,7 @@
             <td><%= place.placeId %></td>
             <td><%= place.placeName %></td>
             <td><%= place.placeAddress %></td>
-            <td><%= place.date %></td>
+            <td><%= place._id.getTimestamp() %></td>
           </tr>
           <%})%>
         </tbody>
