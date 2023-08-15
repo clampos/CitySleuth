@@ -63,8 +63,8 @@ router.get("/contact", (req, res, next) => {
 
 // ----------------------------------------------------
 
-router.get("/account-settings", (req, res, next) => {
-  res.render("accountSettings");
+router.get("/my-account", (req, res, next) => {
+  res.render("myAccount");
 });
 
 // ----------------------------------------------------
@@ -175,21 +175,25 @@ router.post("/marked-visited", async (req, res, next) => {
 
   await newPlace.save();
 
-  User.findOneAndUpdate(
-    { _id: req.user._id },
-    {
-      $push: {
-        visitedPlaces: {
-          placeId: req.body.placeId,
-          placeName: req.body.placeName,
-          placeAddress: req.body.placeAddress,
+  try {
+    User.findOneAndUpdate(
+      { _id: req.user._id },
+      {
+        $push: {
+          visitedPlaces: {
+            placeId: req.body.placeId,
+            placeName: req.body.placeName,
+            placeAddress: req.body.placeAddress,
+          },
         },
       },
-    },
-    { new: true }
-  ).then((user) => {
-    console.log(user);
-  });
+      { new: true }
+    ).then((user) => {
+      console.log(user);
+    });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // ----------------------------------------------------
