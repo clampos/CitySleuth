@@ -9,12 +9,11 @@
     <script src="browserFunctions.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwvO4w6URyS1Rs15buwNKrF8xCPB9vJRA&libraries=places"></script>
     <style>
-
-main {
-  display: flex;
-  flex-flow: row;
-  min-height: 100vh;
-}
+      main {
+        display: flex;
+        flex-flow: row;
+        min-height: 100vh;
+      }
     </style>
   </head>
   <body onload="initialise()">
@@ -29,31 +28,42 @@ main {
       <li style="float: right"><a href="/home">Home</a></li>
     </ul>
 
-      <main>
-        <aside>
-          <div class="welcome">
-            <h3>Hello,&nbsp;<%=username%>!</h3>
-            <p id="location"></p>
-            <br>
-            Search for anything from museums,&nbsp;to restaurants,&nbsp;to parks,&nbsp;to cinemas!&nbsp;The application will then bring up your search results within your area,&nbsp;and then you have the option to mark them as visited.
-            <br>
-            <br>
-            Check your Dashboard to see an up-to-date travel diary - and see how many places you've checked into across the world!
-            </div>
-      <div id="searchForm">
-        <input type="text" id="searchKeyword" placeholder="What would you like to find?">
-        <button id="searchButton">Let's go!</button>
-      </div>
-    </aside>
-    <aside>
-      <div id="resultsColumn">
-        <div id="results">Your search results will appear here - this may take a few seconds...
+    <main>
+      <aside>
+        <div class="welcome">
+          <h3>Hello,&nbsp;<%=username%>!</h3>
+          <p id="location"></p>
+          <br />
+          Search for anything from museums,&nbsp;to restaurants,&nbsp;to
+          parks,&nbsp;to cinemas!&nbsp;The application will then bring up your
+          search results within your area,&nbsp;and then you have the option to
+          mark them as visited.
+          <br />
+          <br />
+          Check your Dashboard to see an up-to-date travel diary - and see how
+          many places you've checked into across the world!
+        </div>
+        <div id="searchForm">
+          <input
+            type="text"
+            id="searchKeyword"
+            placeholder="What would you like to find?"
+          />
+          <button id="searchButton">Let's go!</button>
+        </div>
+      </aside>
+      <aside>
+        <div id="resultsColumn">
+          <div id="results">
+            Your search results will appear here - this may take a few
+            seconds...
+          </div>
         </div>
       </aside>
       <article>
-      <div id="mapContainer"></div>
+        <div id="mapContainer"></div>
       </article>
-    <script src="APIFunctions.js"></script>
+      <script src="APIFunctions.js"></script>
     </main>
     <footer>Birkbeck Computer Science MSc Project</footer>
   </body>

@@ -1,15 +1,15 @@
 const deleteInput = document.getElementById("deleteInput");
 const deleteButton = document.getElementById("deleteButton");
 
-deleteButton.addEventListener("click", function () {
+deleteButton.addEventListener("click", async function () {
   const username = deleteInput.value;
   if (username) {
     deleteUser(username);
   }
 });
 
-function deleteUser(username) {
-  fetch(`/user-deletion/${username}`, {
+async function deleteUser(username) {
+  await fetch(`/user-deletion/${username}`, {
     method: "DELETE",
   })
     .then((response) => response.json())
