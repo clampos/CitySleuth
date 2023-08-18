@@ -207,11 +207,10 @@ router.delete("/user-deletion/:username", async (req, res, next) => {
     console.log("401 error: Wrong username entered");
   } else {
     try {
-      deletedUser = await User.deleteOne({
+      (deletedUser = await User.deleteOne({
         username: req.params.username,
-      });
-      console.log(deletedUser);
-      res.render("login");
+      })),
+        console.log(deletedUser);
     } catch (error) {
       console.log(error);
     }

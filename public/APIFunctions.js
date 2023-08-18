@@ -95,6 +95,7 @@ markVisitedButtonsContainer.addEventListener("click", function (event) {
     const placeId = event.target.getAttribute("placeId");
     const placeName = event.target.getAttribute("placeName");
     const placeAddress = event.target.getAttribute("placeAddress");
+    event.target.innerHTML = "Visited!";
     console.log(placeId, placeName, placeAddress);
     markVisited(placeId, placeName, placeAddress);
   }
