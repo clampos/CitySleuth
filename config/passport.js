@@ -6,6 +6,8 @@ const connection = require("./database");
 const { valid } = require("joi");
 const { request } = require("express");
 const User = connection.models.User;
+require("dotenv/config");
+const jwt = require("jsonwebtoken");
 
 const verifyUser = (username, password, done) => {
   User.findOne({ username: username }).then(async (user) => {

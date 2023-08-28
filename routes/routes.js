@@ -17,6 +17,9 @@ const flash = require("express-flash");
 const methodOverride = require("method-override");
 const axios = require("axios");
 const https = require("https");
+const verifyToken = require("../utils/verifyToken");
+const setToken = require("../utils/setToken");
+const authorise = require("../utils/verifyToken");
 
 // ----------------------------------------------------
 // GET routes
@@ -47,14 +50,9 @@ router.get("/login", (req, res, next) => {
 // ----------------------------------------------------
 
 router.get("/logout", (req, res, next) => {
-  req.logout(function (err) {
-    if (err) {
-      return next(err);
-    }
-    res.redirect("/login");
-  });
+  req.session.destroy();
+  res.redirect("/login");
 });
-
 // ----------------------------------------------------
 
 router.get("/contact", (req, res, next) => {
@@ -134,7 +132,8 @@ router.post(
     failureRedirect: "/login",
     successRedirect: "/home",
     failureFlash: true,
-  })
+  }),
+  setToken
 );
 
 // ----------------------------------------------------
