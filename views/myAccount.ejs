@@ -5,6 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CitySleuth - Update Profile</title>
     <link rel="stylesheet" href="stylesheets/styles.css" />
+    <style>
+      main {
+        color: white;
+        display: flex;
+        flex-flow: row;
+        min-height: 100vh;
+        min-width: 100vw;
+      }
+
+      aside {
+        margin: 20px;
+        flex: 1 0 auto;
+      }
+
+      article {
+        display: flex;
+        flex-flow: column;
+        margin: 20px;
+        flex: 1 0 auto;
+      }
+    </style>
   </head>
   <body>
     <ul>
@@ -17,12 +38,24 @@
       <li style="float: right"><a href="/dashboard">Dashboard</a></li>
       <li style="float: right"><a href="/home">Home</a></li>
     </ul>
-    <div class="reg_login_welcome" id="messageContainer">
-      <h3>Do you want to delete your account?</h3>
-      <p>Please confirm your username and press "Confirm":</p>
-      <input type="text" id="deleteInput" placeholder="Enter username" />
-      <input type="submit" id="deleteButton" value="Confirm" />
-    </div>
+    <main>
+      <aside>
+        <h3>Do you want to delete your account?</h3>
+        <p>Please confirm your username and press "Confirm":</p>
+        <input type="text" id="deleteInput" placeholder="Enter username" />
+        <input type="submit" id="deleteButton" value="Confirm" />
+      </aside>
+      <article>
+        <h3>COMING SOON:&nbsp;Do you want to set some search preferences?</h3>
+        <p>
+          Please enter a search preference (this can enhance your user
+          experience).
+        </p>
+        <input type="text" id="preferenceInput" placeholder="Enter keyword" />
+        <input type="submit" id="preferenceButton" value="Confirm" />
+      </article>
+    </main>
+
     <footer>Birkbeck Computer Science MSc Project</footer>
     <script src="userFunctions.js"></script>
   </body>

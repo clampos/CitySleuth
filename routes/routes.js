@@ -25,49 +25,49 @@ const authorise = require("../utils/verifyToken");
 // GET routes
 // ----------------------------------------------------
 
-router.get("/", (req, res, next) => {
+router.get("/", async (req, res, next) => {
   res.render("register");
 });
 
 // ----------------------------------------------------
 
-router.get("/home", (req, res, next) => {
+router.get("/home", async (req, res, next) => {
   res.render("homepage", { username: req.user.username });
 });
 
 // ----------------------------------------------------
 
-router.get("/register", (req, res, next) => {
+router.get("/register", async (req, res, next) => {
   res.render("register");
 });
 
 // ----------------------------------------------------
 
-router.get("/login", (req, res, next) => {
+router.get("/login", async (req, res, next) => {
   res.render("login");
 });
 
 // ----------------------------------------------------
 
-router.get("/logout", (req, res, next) => {
+router.get("/logout", async (req, res, next) => {
   req.session.destroy();
   res.redirect("/login");
 });
 // ----------------------------------------------------
 
-router.get("/contact", (req, res, next) => {
+router.get("/contact", async (req, res, next) => {
   res.render("contact");
 });
 
 // ----------------------------------------------------
 
-router.get("/my-account", (req, res, next) => {
+router.get("/my-account", async (req, res, next) => {
   res.render("myAccount");
 });
 
 // ----------------------------------------------------
 
-router.get("/dashboard", (req, res, next) => {
+router.get("/dashboard", async (req, res, next) => {
   User.findOne({ _id: req.user._id }, function (err, user) {
     res.render("dashboard", { username: req.user.username, user: user });
   });
@@ -75,7 +75,7 @@ router.get("/dashboard", (req, res, next) => {
 
 // ----------------------------------------------------
 
-router.get("/login-failure", (req, res, next) => {
+router.get("/login-failure", async (req, res, next) => {
   res.send("You entered the wrong password.");
 });
 
@@ -196,6 +196,27 @@ router.post("/marked-visited", async (req, res, next) => {
 });
 
 // ----------------------------------------------------
+// PATCH routes
+// ----------------------------------------------------
+
+router.patch("/preference-save/:preference", async (req, res, next) => {
+  const preference = req.params.preference;
+
+  try {
+    await User.findOneAndUpdate(
+      { _id: req.user._id },
+      {
+        $push: {
+          preferences: preference,
+        },
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// ----------------------------------------------------
 // DELETE routes
 // ----------------------------------------------------
 router.delete("/user-deletion/:username", async (req, res, next) => {
@@ -210,10 +231,13 @@ router.delete("/user-deletion/:username", async (req, res, next) => {
         username: req.params.username,
       })),
         console.log(deletedUser);
+      res.redirect(303, "/register");
     } catch (error) {
       console.log(error);
     }
   }
 });
+
+// ----------------------------------------------------
 
 module.exports = router;
