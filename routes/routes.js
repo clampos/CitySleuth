@@ -87,11 +87,21 @@ router.post("/register", async (req, res, next) => {
   const { error } = registerValidation(req.body);
 
   if (error) {
+    // return res
+    //   .status(400)
+    //   .render(("register", { flash: error["details"][0]["message"] }));
     return res.status(400).send({ message: error["details"][0]["message"] }); // Message to be tidied but works
   }
 
   const userExists_1 = await User.findOne({ username: req.body.username });
   if (userExists_1) {
+    // return res.status(400).render(
+    //   ("register",
+    //   {
+    //     flash:
+    //       "An account with the same username already exists. Please go back and try again.",
+    //   })
+    // );
     return res.status(400).send({
       message:
         "An account with the same username already exists. Please go back and try again.",
@@ -100,6 +110,11 @@ router.post("/register", async (req, res, next) => {
 
   const userExists_2 = await User.findOne({ email: req.body.email });
   if (userExists_2) {
+    //   res.render("register", {
+    //     flash:
+    //       "An account with the same username already exists. Please go back and try again.",
+    //   });
+    // }
     return res.status(400).send({
       message:
         "An account is already registered to this email address. Please go back and try again.", // Message to be tidied but works
@@ -118,9 +133,9 @@ router.post("/register", async (req, res, next) => {
       console.log(user);
     });
 
-    res.redirect("/login");
+    res.status(200).redirect("/login");
   } catch {
-    res.redirect("/register");
+    res.status(200).redirect("/register");
   }
 });
 
