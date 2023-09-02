@@ -20,6 +20,7 @@ const https = require("https");
 const verifyToken = require("../utils/verifyToken");
 const setToken = require("../utils/setToken");
 const authorise = require("../utils/verifyToken");
+const isAuth = require("../utils/userAuth").isAuth;
 
 // ----------------------------------------------------
 // GET routes
@@ -31,7 +32,7 @@ router.get("/", async (req, res, next) => {
 
 // ----------------------------------------------------
 
-router.get("/home", async (req, res, next) => {
+router.get("/home", isAuth, async (req, res, next) => {
   res.render("homepage", { username: req.user.username });
 });
 
@@ -49,25 +50,25 @@ router.get("/login", async (req, res, next) => {
 
 // ----------------------------------------------------
 
-router.get("/logout", async (req, res, next) => {
+router.get("/logout", isAuth, async (req, res, next) => {
   req.session.destroy();
   res.redirect("/login");
 });
 // ----------------------------------------------------
 
-router.get("/contact", async (req, res, next) => {
+router.get("/contact", isAuth, async (req, res, next) => {
   res.render("contact");
 });
 
 // ----------------------------------------------------
 
-router.get("/my-account", async (req, res, next) => {
+router.get("/my-account", isAuth, async (req, res, next) => {
   res.render("myAccount");
 });
 
 // ----------------------------------------------------
 
-router.get("/dashboard", async (req, res, next) => {
+router.get("/dashboard", isAuth, async (req, res, next) => {
   User.findOne({ _id: req.user._id }, function (err, user) {
     res.render("dashboard", { username: req.user.username, user: user });
   });
@@ -76,7 +77,7 @@ router.get("/dashboard", async (req, res, next) => {
 // ----------------------------------------------------
 
 router.get("/login-failure", async (req, res, next) => {
-  res.send("You entered the wrong password.");
+  res.status(401).render("login");
 });
 
 // ----------------------------------------------------
@@ -144,7 +145,7 @@ router.post("/register", async (req, res, next) => {
 router.post(
   "/login",
   passport.authenticate("local", {
-    failureRedirect: "/login",
+    failureRedirect: "/login-failure",
     successRedirect: "/home",
     failureFlash: true,
   }),
@@ -153,7 +154,7 @@ router.post(
 
 // ----------------------------------------------------
 
-router.post("/place-search", async (req, res, next) => {
+router.post("/place-search", isAuth, async (req, res, next) => {
   const { latitude, longitude, keyword } = req.body;
 
   // Structure Google Places API call based on the received coordinates and keyword
@@ -179,7 +180,7 @@ router.post("/place-search", async (req, res, next) => {
 
 // ----------------------------------------------------
 
-router.post("/marked-visited", async (req, res, next) => {
+router.post("/marked-visited", isAuth, async (req, res, next) => {
   const newPlace = new VisitedPlace({
     placeId: req.body.placeId,
     placeName: req.body.placeName,
@@ -214,7 +215,7 @@ router.post("/marked-visited", async (req, res, next) => {
 // PATCH routes
 // ----------------------------------------------------
 
-router.patch("/preference-save/:preference", async (req, res, next) => {
+router.patch("/preference-save/:preference", isAuth, async (req, res, next) => {
   const preference = req.params.preference;
 
   try {
@@ -234,7 +235,7 @@ router.patch("/preference-save/:preference", async (req, res, next) => {
 // ----------------------------------------------------
 // DELETE routes
 // ----------------------------------------------------
-router.delete("/user-deletion/:username", async (req, res, next) => {
+router.delete("/user-deletion/:username", isAuth, async (req, res, next) => {
   console.log(req.params.username);
   const uname = req.params.username;
 
