@@ -29,30 +29,3 @@ function initialise() {
       .catch((err) => console.warn(err.message));
   });
 }
-
-// ----------------------------------------------------
-
-function placesRequest() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function (position) {
-      const latitude = position.coords.latitude;
-      const longitude = position.coords.longitude;
-      const keyword = document.getElementById("userinput");
-
-      fetch("/getPlaces", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ latitude, longitude, keyword }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(latitude, longitude, keyword);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    });
-  }
-}
