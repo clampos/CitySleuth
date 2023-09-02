@@ -7,68 +7,60 @@ const passport = require("passport");
 const connection = require("../config/database");
 const User = connection.models.User;
 const VisitedPlace = connection.models.VisitedPlace;
-const bodyParser = require("body-parser");
 const { check, validationResult } = require("express-validator");
-const joi = require("joi");
 const registerValidation =
   require("../validations/validation").registerValidation;
 const bcrypt = require("bcryptjs");
-const flash = require("express-flash");
-const methodOverride = require("method-override");
-const axios = require("axios");
-const https = require("https");
-const verifyToken = require("../utils/verifyToken");
 const setToken = require("../utils/setToken");
-const authorise = require("../utils/verifyToken");
 const isAuth = require("../utils/userAuth").isAuth;
 
 // ----------------------------------------------------
 // GET routes
 // ----------------------------------------------------
 
-router.get("/", async (req, res, next) => {
+router.get("/", async (req, res) => {
   res.render("register");
 });
 
 // ----------------------------------------------------
 
-router.get("/home", isAuth, async (req, res, next) => {
+router.get("/home", isAuth, async (req, res) => {
   res.render("homepage", { username: req.user.username });
 });
 
 // ----------------------------------------------------
 
-router.get("/register", async (req, res, next) => {
+router.get("/register", async (req, res) => {
   res.render("register");
 });
 
 // ----------------------------------------------------
 
-router.get("/login", async (req, res, next) => {
+router.get("/login", async (req, res) => {
   res.render("login");
 });
 
 // ----------------------------------------------------
 
-router.get("/logout", isAuth, async (req, res, next) => {
+router.get("/logout", isAuth, async (req, res) => {
   req.session.destroy();
   res.redirect("/login");
 });
 // ----------------------------------------------------
 
-router.get("/contact", isAuth, async (req, res, next) => {
+router.get("/contact", isAuth, async (req, res) => {
   res.render("contact");
 });
 
 // ----------------------------------------------------
 
-router.get("/my-account", isAuth, async (req, res, next) => {
+router.get("/my-account", isAuth, async (req, res) => {
   res.render("myAccount");
 });
 
 // ----------------------------------------------------
 
-router.get("/dashboard", isAuth, async (req, res, next) => {
+router.get("/dashboard", isAuth, async (req, res) => {
   User.findOne({ _id: req.user._id }, function (err, user) {
     res.render("dashboard", { username: req.user.username, user: user });
   });
@@ -76,7 +68,7 @@ router.get("/dashboard", isAuth, async (req, res, next) => {
 
 // ----------------------------------------------------
 
-router.get("/login-failure", async (req, res, next) => {
+router.get("/login-failure", async (req, res) => {
   res.status(401).render("login");
 });
 
@@ -84,7 +76,7 @@ router.get("/login-failure", async (req, res, next) => {
 // POST routes
 // ----------------------------------------------------
 
-router.post("/register", async (req, res, next) => {
+router.post("/register", async (req, res) => {
   const { error } = registerValidation(req.body);
 
   if (error) {
@@ -154,7 +146,7 @@ router.post(
 
 // ----------------------------------------------------
 
-router.post("/place-search", isAuth, async (req, res, next) => {
+router.post("/place-search", isAuth, async (req, res) => {
   const { latitude, longitude, keyword } = req.body;
 
   // Structure Google Places API call based on the received coordinates and keyword
@@ -170,7 +162,7 @@ router.post("/place-search", isAuth, async (req, res, next) => {
       res.json(data);
       console.log(data);
     })
-    .catch((error) => {
+    .catch(() => {
       // Handle any errors that occur during the fetch
       res.status(500).json({
         error: "500 error :(",
@@ -180,7 +172,7 @@ router.post("/place-search", isAuth, async (req, res, next) => {
 
 // ----------------------------------------------------
 
-router.post("/marked-visited", isAuth, async (req, res, next) => {
+router.post("/marked-visited", isAuth, async (req) => {
   const newPlace = new VisitedPlace({
     placeId: req.body.placeId,
     placeName: req.body.placeName,
@@ -215,7 +207,7 @@ router.post("/marked-visited", isAuth, async (req, res, next) => {
 // PATCH routes
 // ----------------------------------------------------
 
-router.patch("/preference-save/:preference", isAuth, async (req, res, next) => {
+router.patch("/users/:preference", isAuth, async (req) => {
   const preference = req.params.preference;
 
   try {
@@ -235,7 +227,7 @@ router.patch("/preference-save/:preference", isAuth, async (req, res, next) => {
 // ----------------------------------------------------
 // DELETE routes
 // ----------------------------------------------------
-router.delete("/user-deletion/:username", isAuth, async (req, res, next) => {
+router.delete("/users/:username", isAuth, async (req, res) => {
   console.log(req.params.username);
   const uname = req.params.username;
 

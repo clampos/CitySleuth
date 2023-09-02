@@ -18,7 +18,7 @@ preferenceButton.addEventListener("click", async function () {
 });
 
 async function deleteUser(username) {
-  await fetch(`/user-deletion/${username}`, {
+  await fetch(`/users/${username}`, {
     method: "DELETE",
   })
     .then((response) => response.json())
@@ -32,7 +32,7 @@ async function deleteUser(username) {
 
 async function savePreference(preference) {
   console.log("Running preference save");
-  await fetch(`/preference-save/${preference}`, {
+  await fetch(`/users/${preference}`, {
     method: "PATCH",
   })
     .then((response) => response.json())

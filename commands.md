@@ -18,6 +18,3 @@ npm install mongoose dotenv body-parser joi bcryptjs jsonwebtoken
   npm run dev
 
 npm install passport passport-local express-session
-
-// Install Google Maps js api loader
-npm install @googlemaps/js-api-loader
