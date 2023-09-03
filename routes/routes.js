@@ -155,12 +155,10 @@ router.post("/place-search", isAuth, async (req, res) => {
   const { latitude, longitude, keyword } = req.body;
 
   // Structure Google Places API call based on the received coordinates and keyword
-  const googlePlacesAPIUrl = `https://maps.googleapis.com/maps/api/place/textsearch/json?location=${latitude},${longitude}&radius=5000&query=${encodeURIComponent(
-    keyword
-  )}&key=${process.env.GOOGLE_API_KEY}`;
+  const googlePlacesAPIUrl = `https://maps.googleapis.com/maps/api/place/textsearch/json?location=${latitude},${longitude}&radius=5000&query=${keyword}&key=${process.env.GOOGLE_API_KEY}`;
 
   // Make API call to Google Places API using fetch
-  fetch(googlePlacesAPIUrl)
+  await fetch(googlePlacesAPIUrl)
     .then((response) => response.json())
     .then((data) => {
       // Process the Google Places API response and send it back to the client
