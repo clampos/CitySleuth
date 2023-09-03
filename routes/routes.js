@@ -64,9 +64,8 @@ router.get("/dashboard", isAuth, async (req, res) => {
 
 router.get("/logout", isAuth, async (req, res) => {
   res.clearCookie("connect.sid");
-  req.logOut((error) => {
+  req.session.destroy((error) => {
     console.log(error);
-    req.session.destroy();
     res.redirect("/login");
   });
 });
