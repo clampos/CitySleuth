@@ -42,12 +42,6 @@ router.get("/login", async (req, res) => {
 
 // ----------------------------------------------------
 
-router.get("/logout", isAuth, async (req, res) => {
-  req.session.destroy();
-  res.redirect("/login");
-});
-// ----------------------------------------------------
-
 router.get("/contact", isAuth, async (req, res) => {
   res.render("contact");
 });
@@ -63,6 +57,17 @@ router.get("/my-account", isAuth, async (req, res) => {
 router.get("/dashboard", isAuth, async (req, res) => {
   User.findOne({ _id: req.user._id }, function (err, user) {
     res.render("dashboard", { username: req.user.username, user: user });
+  });
+});
+
+// ----------------------------------------------------
+
+router.get("/logout", isAuth, async (req, res) => {
+  res.clearCookie("connect.sid");
+  req.logOut((error) => {
+    console.log(error);
+    req.session.destroy();
+    res.redirect("/login");
   });
 });
 
