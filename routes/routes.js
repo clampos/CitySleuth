@@ -13,6 +13,7 @@ const registerValidation =
 const bcrypt = require("bcryptjs");
 const setToken = require("../utils/setToken");
 const isAuth = require("../utils/userAuth").isAuth;
+require("dotenv/config");
 
 // ----------------------------------------------------
 // GET routes
@@ -156,7 +157,7 @@ router.post("/place-search", isAuth, async (req, res) => {
   // Structure Google Places API call based on the received coordinates and keyword
   const googlePlacesAPIUrl = `https://maps.googleapis.com/maps/api/place/textsearch/json?location=${latitude},${longitude}&radius=5000&query=${encodeURIComponent(
     keyword
-  )}&key=AIzaSyAwvO4w6URyS1Rs15buwNKrF8xCPB9vJRA`;
+  )}&key=${process.env.GOOGLE_API_KEY}`;
 
   // Make API call to Google Places API using fetch
   fetch(googlePlacesAPIUrl)
