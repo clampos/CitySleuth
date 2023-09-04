@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", async function () {
               const placeLatLng = result.geometry.location;
 
               const placeDiv = document.createElement("div");
-              placeDiv.innerHTML = `<strong>${placeName}</strong><br>Address: ${placeAddress}<br>Rating: ${placeRating}
+              placeDiv.innerHTML = `<strong>${placeName}</strong><br>Address:&nbsp;${placeAddress}<br>Google Reviews Rating:&nbsp;${placeRating}
           <button class="mark-visited" placeId="${result.place_id}" placeName="${result.name}" placeAddress="${result.formatted_address}">Mark as visited</button><br><br>`;
 
               resultsDiv.appendChild(placeDiv);

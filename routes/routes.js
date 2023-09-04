@@ -175,7 +175,7 @@ router.post("/place-search", isAuth, async (req, res) => {
 
 // ----------------------------------------------------
 
-router.post("/marked-visited", isAuth, async (req) => {
+router.post("/marked-visited", isAuth, async (req, res) => {
   const newPlace = new VisitedPlace({
     placeId: req.body.placeId,
     placeName: req.body.placeName,
