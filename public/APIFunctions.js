@@ -5,6 +5,8 @@ document.addEventListener("DOMContentLoaded", async function () {
   const mapContainer = document.getElementById("mapContainer");
 
   // ----------------------------------------------------
+  // Initial configuration of map following place search request (note duplication of function in browserFunctions.js)
+  // ----------------------------------------------------
 
   let map;
   let markers = [];
@@ -21,6 +23,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
   }
 
+  // ----------------------------------------------------
+  // place-search functionality, consisting of eventListener for search bar and fetch() request to send lat, lng and search keyword to browser
+  // Once the server returns the response, the browser updates to display the search results
   // ----------------------------------------------------
 
   searchButton.addEventListener("click", function (event) {
@@ -58,7 +63,7 @@ document.addEventListener("DOMContentLoaded", async function () {
               resultsDiv.appendChild(placeDiv);
 
               // ----------------------------------------------------
-
+              // Update of map to display search result markers
               // ----------------------------------------------------
 
               const marker = new google.maps.Marker({
@@ -69,6 +74,10 @@ document.addEventListener("DOMContentLoaded", async function () {
 
               markers.push(marker);
             });
+
+            // ----------------------------------------------------
+            // Resetting the map bounds to accommodate all markers
+            // ----------------------------------------------------
 
             const bounds = new google.maps.LatLngBounds();
             markers.forEach((marker) => bounds.extend(marker.getPosition()));
@@ -85,6 +94,9 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   initMap();
 
+  // ----------------------------------------------------
+  // mark-visited function, consisting of eventListener for parent element of search result divs
+  // Upon clicking a mark-visited button, a fetch() call sends the place information to the server to be handled
   // ----------------------------------------------------
 });
 

@@ -15,18 +15,22 @@ require("dotenv/config");
 const path = require("path");
 
 // ----------------------------------------------------
+// Setting view engine to EJS and configuration of views and public folders to make them accessible to application
+// ----------------------------------------------------
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
 
 // ----------------------------------------------------
+// Setting up application to parse incoming requests
+// ----------------------------------------------------
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(passport.initialize());
-
+// ----------------------------------------------------
+// Configuring MongoDB session store for user sessions, including options
 // ----------------------------------------------------
 
 const sessionStore = new MongoStore({
@@ -47,15 +51,24 @@ app.use(
 );
 
 // ----------------------------------------------------
-
-// Middlewares
+// Initialising Passport for incoming requests
+// ----------------------------------------------------
 
 require("./config/passport");
 
 app.use(passport.initialize());
+
+// ----------------------------------------------------
+// Further middlewares, including method override for PUT and DELETE requests, and restoring login state from a session
+// ----------------------------------------------------
+
 app.use(flash());
 app.use(methodOverride("_method"));
 app.use(passport.session());
+
+// ----------------------------------------------------
+// Logging session and user to the console for each request; logging path and method for each request
+// ----------------------------------------------------
 
 app.use((req, res, next) => {
   console.log(req.session);
@@ -63,17 +76,20 @@ app.use((req, res, next) => {
   next();
 });
 
-// Print request path and request method after every call, and pass on to next handler
 app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
 });
 
-// Import routes from auth.js
+// ----------------------------------------------------
+// Import routes from routes.js
+// ----------------------------------------------------
 
 app.use(routes);
 
-// Listen for requests on port 3000
+// ----------------------------------------------------
+// Listen for requests on port number taken from .env
+// ----------------------------------------------------
 app.listen(process.env.PORT, () => {
   console.log("Listening on port", process.env.PORT);
 });
