@@ -131,9 +131,9 @@ router.post("/register", async (req, res) => {
       console.log(user);
     });
 
-    res.status(200).redirect("/login");
+    res.redirect("/login");
   } catch {
-    res.status(200).redirect("/register");
+    res.redirect("/register");
   }
 });
 
