@@ -1,9 +1,9 @@
 runtime: nodejs18
 
 env_variables:
-DB_CONNECTOR: "mongodb+srv://osfclamp:Alex2021!@cluster0.7bzbtmn.mongodb.net/MScProject?retryWrites=true&w=majority"
-SESSION_SECRET: "abababcdcdcd1234"
-PORT: "3000"
-GOOGLE_API_KEY: "AIzaSyAwvO4w6URyS1Rs15buwNKrF8xCPB9vJRA"
-TOKEN_SECRET: "asdflkjh1357924680"
-PERSONAL_ACCESS_TOKEN: "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"
+  DB_CONNECTOR: "mongodb+srv://osfclamp:Alex2021!@cluster0.7bzbtmn.mongodb.net/MScProject?retryWrites=true&w=majority"
+  SESSION_SECRET: "abababcdcdcd1234"
+  PORT: "3000"
+  GOOGLE_API_KEY: "AIzaSyAwvO4w6URyS1Rs15buwNKrF8xCPB9vJRA"
+  TOKEN_SECRET: "asdflkjh1357924680"
+  PERSONAL_ACCESS_TOKEN: "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"
