@@ -1,3 +1,5 @@
+// Passport.js function to restrict certain API endpoints to authorised users
+
 module.exports.isAuth = (req, res, next) => {
   if (req.isAuthenticated()) {
     next();

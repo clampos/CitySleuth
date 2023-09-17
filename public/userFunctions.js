@@ -3,6 +3,10 @@ const deleteButton = document.getElementById("deleteButton");
 const preferenceInput = document.getElementById("preferenceInput");
 const preferenceButton = document.getElementById("preferenceButton");
 
+// ----------------------------------------------------
+// EventListeners added for account deletion and search preferences update functionalities
+// ----------------------------------------------------
+
 deleteButton.addEventListener("click", async function () {
   const username = deleteInput.value;
   if (username) {
@@ -17,6 +21,10 @@ preferenceButton.addEventListener("click", async function () {
   }
 });
 
+// ----------------------------------------------------
+// deleteUser() function makes a fetch() call, sending username to the DELETE /users/:username endpoint
+// ----------------------------------------------------
+
 async function deleteUser(username) {
   await fetch(`/users/${username}`, {
     method: "DELETE",
@@ -29,6 +37,10 @@ async function deleteUser(username) {
       console.log(error);
     });
 }
+
+// ----------------------------------------------------
+// savePreference() function makes a fetch() call, sending search keyword to the PATCH /users/:preference endpoint
+// ----------------------------------------------------
 
 async function savePreference(preference) {
   console.log("Running preference save");

@@ -1,9 +1,11 @@
 function initialise() {
   var x = document.getElementById("location");
+
   // ----------------------------------------------------
   // Initial setting of map centred on user's location
   // A fetch() call to the Google Geocoding API is made to translate the user's lat and lng into the corresponding postal town and country
   // ----------------------------------------------------
+
   navigator.geolocation.watchPosition(function (position) {
     const LAT = position.coords.latitude;
     const LNG = position.coords.longitude;

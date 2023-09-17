@@ -1,5 +1,7 @@
 const joi = require("joi");
 
+// JOI schema for user input validation
+
 const registerValidation = (data) => {
   const schemaValidation = joi.object({
     username: joi.string().alphanum().required().min(6).max(20),

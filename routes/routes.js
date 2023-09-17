@@ -154,19 +154,16 @@ router.post(
 router.post("/place-search", isAuth, async (req, res) => {
   const { latitude, longitude, keyword } = req.body;
 
-  // Structure Google Places API call based on the received coordinates and keyword
+  // String interpolation is used to modify the Google Places API URL with latitude, longitude and search keyword sent from the client
   const googlePlacesAPIUrl = `https://maps.googleapis.com/maps/api/place/textsearch/json?location=${latitude},${longitude}&radius=5000&query=${keyword}&key=${process.env.GOOGLE_API_KEY}`;
 
-  // Make API call to Google Places API using fetch
   await fetch(googlePlacesAPIUrl)
     .then((response) => response.json())
     .then((data) => {
-      // Process the Google Places API response and send it back to the client
       res.json(data);
       console.log(data);
     })
     .catch(() => {
-      // Handle any errors that occur during the fetch
       res.status(500).json({
         error: "500 error :(",
       });

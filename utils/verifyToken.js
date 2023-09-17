@@ -1,3 +1,5 @@
+// Note that JWT is not used in the current implementation of the application
+
 const jsonwebtoken = require("jsonwebtoken");
 
 function authorise(req, res, next) {
